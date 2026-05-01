@@ -129,7 +129,7 @@ export default function Home() {
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span className="text-xl">🛡️</span>
-            <span className="font-bold text-white">ComplyBuddy</span>
+            <span className="font-bold text-white">ComplyScan</span>
             <span className="badge-blue text-xs px-2 py-0.5 rounded-full ml-1">Beta</span>
           </div>
           <nav className="flex items-center gap-6 text-sm text-slate-400">
@@ -308,7 +308,7 @@ export default function Home() {
             <div className="glass rounded-xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
                 <p className="text-sm font-semibold text-white">Scan another piece of content</p>
-                <p className="text-xs text-slate-500 mt-0.5">ComplyBuddy is free to use. No account needed.</p>
+                <p className="text-xs text-slate-500 mt-0.5">ComplyScan is free to use. No account needed.</p>
               </div>
               <button
                 onClick={() => { setContent(""); setResult(null); setError(""); }}
@@ -341,7 +341,7 @@ export default function Home() {
 
         {/* Who it's for */}
         <section className="mt-16">
-          <h2 className="text-2xl font-bold text-white text-center mb-8">Who uses ComplyBuddy?</h2>
+          <h2 className="text-2xl font-bold text-white text-center mb-8">Who uses ComplyScan?</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {[
               { icon: "📱", title: "Influencers", desc: "Check posts before publishing. Never miss an #ad disclosure again." },
@@ -363,7 +363,7 @@ export default function Home() {
           <h2 className="text-2xl font-bold text-white text-center mb-8">FAQ</h2>
           <div className="space-y-3 max-w-2xl mx-auto">
             {[
-              { q: "Is this legal advice?", a: "No. ComplyBuddy is an AI-powered educational tool. It helps you identify potential issues but does not constitute legal advice. Consult a qualified lawyer for serious compliance matters." },
+              { q: "Is this legal advice?", a: "No. ComplyScan is an AI-powered educational tool. It helps you identify potential issues but does not constitute legal advice. Consult a qualified lawyer for serious compliance matters." },
               { q: "Which regulations does it cover?", a: "FTC (US), GDPR (EU), DPDP Act 2023 (India), ASCI guidelines (India), copyright basics, platform ad policies (Instagram, YouTube, TikTok, LinkedIn), and general advertising standards." },
               { q: "Is my content stored?", a: "No. Your content is sent to an AI model for analysis and is not stored or logged by us." },
               { q: "How accurate is it?", a: "The AI is highly capable but not infallible. It works best as a first-pass check. High-severity issues flagged should always be verified." },
@@ -379,7 +379,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-white/5 mt-20 py-8 text-center text-xs text-slate-500">
-        <p>🛡️ <strong className="text-slate-400">ComplyBuddy</strong> — AI compliance checker for content creators and businesses</p>
+        <p>🛡️ <strong className="text-slate-400">ComplyScan</strong> — AI compliance checker for content creators and businesses</p>
         <p className="mt-1">Not legal advice. For educational purposes only.</p>
       </footer>
     </div>
