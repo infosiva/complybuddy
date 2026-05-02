@@ -121,7 +121,7 @@ export default function Home() {
             <span className="font-bold text-white tracking-tight">ComplyScan</span>
             <span className="badge-blue text-xs px-2 py-0.5 rounded-full">Beta</span>
           </div>
-          <nav className="flex items-center gap-5 text-sm text-slate-400">
+          <nav className="hidden sm:flex items-center gap-5 text-sm text-slate-400">
             <a href="#how" className="hover:text-white transition-colors">How it works</a>
             <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
           </nav>
@@ -169,8 +169,8 @@ export default function Home() {
             rows={4}
           />
 
-          {/* Bottom row: examples + char count + button */}
-          <div className="flex flex-wrap items-center justify-between gap-2 mt-3">
+          {/* Bottom row: examples + scan button */}
+          <div className="mt-3 space-y-2">
             <div className="flex flex-wrap items-center gap-1.5">
               <span className="text-xs text-slate-500">Try:</span>
               {EXAMPLES.map(ex => (
@@ -186,7 +186,7 @@ export default function Home() {
             <button
               onClick={handleScan}
               disabled={loading || !content.trim()}
-              className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-5 py-2 rounded-xl transition-all text-sm whitespace-nowrap"
+              className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-5 py-2.5 rounded-xl transition-all text-sm"
             >
               {loading ? (
                 <><span className="inline-block w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />Scanning…</>
