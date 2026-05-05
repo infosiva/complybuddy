@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import AdUnit from "@/components/AdUnit";
 
 type Severity = "high" | "medium" | "low";
 type ContentType = "social media post" | "website copy" | "ad creative" | "email campaign" | "blog post";
@@ -300,6 +301,9 @@ export default function Home() {
           </div>
         )}
 
+        {/* Ad — after scan results, high attention */}
+        {result && <AdUnit size="banner" className="mt-6" />}
+
         {/* How it works */}
         <section id="how" className="mt-16">
           <h2 className="text-xl font-bold text-white text-center mb-6">How it works</h2>
@@ -337,6 +341,9 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* Ad — between who it's for and FAQ */}
+        <AdUnit size="rectangle" className="mt-8" />
 
         {/* FAQ */}
         <section id="faq" className="mt-10">
