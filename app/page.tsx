@@ -114,31 +114,61 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen z-10 flex flex-col">
-      {/* Header */}
-      <header className="border-b border-white/5 glass sticky top-0 z-20">
-        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-lg">🛡️</span>
-            <span className="font-bold text-white tracking-tight">ComplyScan</span>
-            <span className="badge-blue text-xs px-2 py-0.5 rounded-full">Beta</span>
+      {/* Header — Legal Trust Platform */}
+      <header className="border-b border-indigo-900/30 backdrop-blur-xl sticky top-0 z-20" style={{ background: 'rgba(5,8,16,0.92)' }}>
+        <div className="max-w-3xl mx-auto px-4 py-3.5 flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <span className="text-xl">🛡️</span>
+            <span className="font-bold text-white tracking-tight text-lg">ComplyScan</span>
+            <span className="text-xs px-2 py-0.5 rounded font-semibold" style={{ background: 'rgba(79,70,229,0.3)', color: '#a5b4fc', border: '1px solid rgba(79,70,229,0.4)' }}>Beta</span>
           </div>
-          <nav className="hidden sm:flex items-center gap-5 text-sm text-slate-400">
-            <a href="#how" className="hover:text-white transition-colors">How it works</a>
-            <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
+          <nav className="hidden sm:flex items-center gap-6 text-sm">
+            <a href="#how" className="text-white/50 hover:text-indigo-300 transition-colors">How it works</a>
+            <a href="#faq" className="text-white/50 hover:text-indigo-300 transition-colors">FAQ</a>
+            <button className="px-4 py-2 rounded-lg font-semibold text-sm text-white transition-all" style={{ background: 'linear-gradient(135deg, #4f46e5, #6366f1)' }}>
+              Scan Content Free
+            </button>
           </nav>
         </div>
       </header>
 
       <main className="flex-1 max-w-3xl mx-auto w-full px-4 pt-8 pb-16">
 
-        {/* Compact hero */}
-        <div className="text-center mb-6">
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2 leading-tight">
-            Is your content <span className="text-indigo-400">legally compliant?</span>
+        {/* Hero — Legal Trust Platform */}
+        <div className="text-center mb-8">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border font-semibold text-xs mb-5" style={{ borderColor: 'rgba(79,70,229,0.4)', background: 'rgba(79,70,229,0.12)', color: '#a5b4fc' }}>
+            🛡️ AI Compliance Scanner · Free
+          </div>
+          {/* Headline */}
+          <h1 className="text-5xl font-bold text-white mb-3 leading-tight" style={{ letterSpacing: '-0.02em' }}>
+            Is your content<br />
+            <span style={{ background: 'linear-gradient(90deg, #4f46e5, #6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>legally compliant?</span>
           </h1>
-          <p className="text-slate-400 text-sm">
-            Paste any post, ad, or website copy. Get an instant AI check for FTC, GDPR, copyright & more.
+          {/* Subtext */}
+          <p className="text-white/50 text-sm max-w-lg mx-auto mb-5 leading-relaxed">
+            Paste any post, ad, or website copy. Get an instant AI check for FTC, GDPR, copyright, and advertising rules.
           </p>
+          {/* Compliance badges */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
+            <span className="text-xs px-3 py-1 rounded-full font-semibold" style={{ background: 'rgba(34,197,94,0.15)', color: '#86efac', border: '1px solid rgba(34,197,94,0.25)' }}>FTC</span>
+            <span className="text-xs px-3 py-1 rounded-full font-semibold" style={{ background: 'rgba(59,130,246,0.15)', color: '#93c5fd', border: '1px solid rgba(59,130,246,0.25)' }}>GDPR</span>
+            <span className="text-xs px-3 py-1 rounded-full font-semibold" style={{ background: 'rgba(245,158,11,0.15)', color: '#fcd34d', border: '1px solid rgba(245,158,11,0.25)' }}>Copyright</span>
+            <span className="text-xs px-3 py-1 rounded-full font-semibold" style={{ background: 'rgba(79,70,229,0.15)', color: '#a5b4fc', border: '1px solid rgba(79,70,229,0.3)' }}>Ad Policy</span>
+          </div>
+          {/* CTA */}
+          <button
+            onClick={handleScan}
+            disabled={loading || !content.trim()}
+            className="inline-flex items-center justify-center gap-2 font-semibold text-sm text-white px-8 py-3 rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed mb-2"
+            style={{ background: 'linear-gradient(135deg, #4f46e5, #6366f1)' }}
+          >
+            {loading ? (
+              <><span className="inline-block w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />Scanning…</>
+            ) : (
+              <>🔍 Scan Free</>
+            )}
+          </button>
         </div>
 
         {/* Main scanner — everything above fold */}

