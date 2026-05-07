@@ -5,7 +5,7 @@ import SharedNavbar from '@/components/SharedNavbar'
 import SharedFooter from '@/components/SharedFooter'
 import type { BrandConfig } from '@/components/SharedNavbar'
 
-export const brand: BrandConfig = {
+const brand: BrandConfig = {
   name: 'ComplyScan',
   tagline: 'AI compliance checker — GDPR, FTC, copyright issues caught before they cost you.',
   icon: '🛡️',
