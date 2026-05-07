@@ -113,148 +113,175 @@ export default function Home() {
   }
 
   return (
-    <div className="relative min-h-screen z-10 flex flex-col">
+    <div className="relative min-h-screen z-10 flex flex-col" style={{ background: 'linear-gradient(160deg, #0a0f1e 0%, #0d1529 50%, #0a0f1e 100%)' }}>
       {/* Noise overlay */}
       <div className="noise-overlay" aria-hidden="true" />
-      {/* Ambient orbs */}
-      <div className="liquid-blob liquid-blob-1" style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.15), transparent 70%)' }} aria-hidden="true" />
-      <div className="liquid-blob liquid-blob-2" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.10), transparent 70%)', animationDelay: '-7s' }} aria-hidden="true" />
+      {/* Ambient blobs — deep blue/indigo at very low opacity */}
+      <div
+        className="liquid-blob liquid-blob-1"
+        style={{ background: 'radial-gradient(circle, rgba(30,64,175,0.10), transparent 70%)', opacity: 0.1 }}
+        aria-hidden="true"
+      />
+      <div
+        className="liquid-blob liquid-blob-2"
+        style={{ background: 'radial-gradient(circle, rgba(29,78,216,0.08), transparent 70%)', animationDelay: '-7s', opacity: 0.1 }}
+        aria-hidden="true"
+      />
 
-      {/* Header — Legal Trust Platform */}
-      <header className="border-b border-indigo-900/30 backdrop-blur-xl sticky top-0 z-20" style={{ background: 'rgba(5,8,16,0.92)' }}>
-        <div className="max-w-3xl mx-auto px-4 py-3.5 flex items-center justify-between">
+      {/* Sticky Nav */}
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-gray-950/95 border-b border-blue-900/30">
+        <div className="max-w-4xl mx-auto px-5 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <span className="text-xl">🛡️</span>
-            <span className="font-bold text-white tracking-tight text-lg">ComplyScan</span>
-            <span className="text-xs px-2 py-0.5 rounded font-semibold" style={{ background: 'rgba(79,70,229,0.3)', color: '#a5b4fc', border: '1px solid rgba(79,70,229,0.4)' }}>Beta</span>
+            <span
+              className="badge-3d flex items-center justify-center w-8 h-8 rounded-lg text-base"
+              style={{ background: 'linear-gradient(135deg, #1e40af, #1d4ed8)', boxShadow: '0 2px 12px rgba(29,78,216,0.35)' }}
+            >
+              ✓
+            </span>
+            <span className="font-extrabold text-white tracking-tight text-lg">ComplyBuddy</span>
+            <span className="pill-glass text-xs px-2.5 py-0.5 rounded-full font-semibold" style={{ color: '#93c5fd' }}>
+              AI Compliance
+            </span>
           </div>
-          <nav className="hidden sm:flex items-center gap-6 text-sm">
-            <a href="#how" className="text-white/50 hover:text-indigo-300 transition-colors">How it works</a>
-            <a href="#faq" className="text-white/50 hover:text-indigo-300 transition-colors">FAQ</a>
-            <button className="px-4 py-2 rounded-lg font-semibold text-sm text-white transition-all" style={{ background: 'linear-gradient(135deg, #4f46e5, #6366f1)' }}>
-              Scan Content Free
-            </button>
-          </nav>
+          <button
+            className="btn-liquid px-4 py-2 rounded-lg font-semibold text-sm text-white transition-all"
+            style={{ background: 'linear-gradient(135deg, #1e40af, #1d4ed8)', boxShadow: '0 2px 10px rgba(29,78,216,0.3)' }}
+          >
+            Get started free
+          </button>
         </div>
       </header>
 
-      <main className="flex-1 max-w-3xl mx-auto w-full px-4 pt-8 pb-16">
+      <main className="flex-1 max-w-4xl mx-auto w-full px-5 pb-16">
 
-        {/* Hero — Legal Trust Platform */}
-        <div className="text-center mb-8">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border font-semibold text-xs mb-5" style={{ borderColor: 'rgba(79,70,229,0.4)', background: 'rgba(79,70,229,0.12)', color: '#a5b4fc' }}>
-            🛡️ AI Compliance Scanner · Free
+        {/* Hero */}
+        <section className="py-20 md:py-28 text-center relative">
+          {/* Large checkmark badge */}
+          <div className="inline-flex items-center justify-center mb-6">
+            <span
+              className="badge-3d inline-flex items-center justify-center w-16 h-16 rounded-2xl text-4xl font-bold"
+              style={{
+                background: 'linear-gradient(135deg, #1e3a8a, #1d4ed8)',
+                boxShadow: '0 4px 24px rgba(29,78,216,0.40), 0 1px 0 rgba(255,255,255,0.08) inset',
+                color: '#bfdbfe',
+                fontSize: '28px',
+              }}
+            >
+              ✓
+            </span>
           </div>
+
           {/* Headline */}
-          <h1 className="text-5xl font-bold text-white mb-3 leading-tight" style={{ letterSpacing: '-0.02em' }}>
-            Is your content<br />
-            <span style={{ background: 'linear-gradient(90deg, #4f46e5, #6366f1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>legally compliant?</span>
+          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4 leading-tight" style={{ letterSpacing: '-0.03em' }}>
+            Stay compliant.<br />
+            <span className="text-iridescent">Stay protected.</span>
           </h1>
-          {/* Subtext */}
-          <p className="text-white/50 text-sm max-w-lg mx-auto mb-5 leading-relaxed">
-            Paste any post, ad, or website copy. Get an instant AI check for FTC, GDPR, copyright, and advertising rules.
+
+          {/* Subtitle */}
+          <p className="text-white/50 text-base md:text-lg max-w-xl mx-auto mb-10 leading-relaxed">
+            AI compliance assistant that explains regulations in plain English for your industry.
           </p>
-          {/* Compliance badges */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-6">
-            <span className="text-xs px-3 py-1 rounded-full font-semibold" style={{ background: 'rgba(34,197,94,0.15)', color: '#86efac', border: '1px solid rgba(34,197,94,0.25)' }}>FTC</span>
-            <span className="text-xs px-3 py-1 rounded-full font-semibold" style={{ background: 'rgba(59,130,246,0.15)', color: '#93c5fd', border: '1px solid rgba(59,130,246,0.25)' }}>GDPR</span>
-            <span className="text-xs px-3 py-1 rounded-full font-semibold" style={{ background: 'rgba(245,158,11,0.15)', color: '#fcd34d', border: '1px solid rgba(245,158,11,0.25)' }}>Copyright</span>
-            <span className="text-xs px-3 py-1 rounded-full font-semibold" style={{ background: 'rgba(79,70,229,0.15)', color: '#a5b4fc', border: '1px solid rgba(79,70,229,0.3)' }}>Ad Policy</span>
-          </div>
-          {/* CTA */}
-          <button
-            onClick={handleScan}
-            disabled={loading || !content.trim()}
-            className="inline-flex items-center justify-center gap-2 font-semibold text-sm text-white px-8 py-3 rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed mb-2"
-            style={{ background: 'linear-gradient(135deg, #4f46e5, #6366f1)' }}
-          >
-            {loading ? (
-              <><span className="inline-block w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />Scanning…</>
-            ) : (
-              <>🔍 Scan Free</>
-            )}
-          </button>
-        </div>
 
-        {/* Main scanner — everything above fold */}
-        <div className="glass rounded-2xl p-5 glow-indigo">
-
-          {/* Content type pills */}
-          <div className="flex flex-wrap gap-1.5 mb-3">
-            {CONTENT_TYPES.map(t => (
-              <button
-                key={t}
-                onClick={() => setContentType(t)}
-                className={`text-xs px-3 py-1 rounded-full border transition-all capitalize ${
-                  contentType === t
-                    ? "border-indigo-500 bg-indigo-500/20 text-indigo-300"
-                    : "border-white/10 text-slate-400 hover:border-white/20 hover:text-slate-300"
-                }`}
-              >
-                {t}
-              </button>
-            ))}
+          {/* Content-type selector */}
+          <div className="glass-liquid rounded-2xl p-6 mb-6 max-w-2xl mx-auto text-left">
+            <p className="text-xs font-semibold text-blue-300/70 uppercase tracking-widest mb-3">Content type</p>
+            <div className="flex flex-wrap gap-2">
+              {CONTENT_TYPES.map(t => (
+                <button
+                  key={t}
+                  onClick={() => setContentType(t)}
+                  className={`text-xs px-3.5 py-1.5 rounded-full border font-semibold transition-all capitalize ${
+                    contentType === t
+                      ? "border-blue-500 text-blue-200"
+                      : "border-white/10 text-slate-400 hover:border-blue-700/50 hover:text-slate-300"
+                  }`}
+                  style={contentType === t ? { background: 'rgba(29,78,216,0.25)' } : {}}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Textarea */}
-          <textarea
-            value={content}
-            onChange={e => setContent(e.target.value)}
-            placeholder={`Paste your ${contentType} here…`}
-            className="w-full bg-white/5 border border-white/10 rounded-xl p-3.5 text-sm text-slate-200 placeholder-slate-500 resize-none focus:outline-none focus:border-indigo-500/50 transition-colors"
-            rows={4}
-          />
+          {/* Main scanner input */}
+          <div className="glass-liquid rounded-2xl p-6 max-w-2xl mx-auto text-left">
+            <textarea
+              value={content}
+              onChange={e => setContent(e.target.value)}
+              placeholder={`Paste your ${contentType} here…`}
+              className="w-full rounded-xl p-4 text-sm text-slate-200 placeholder-slate-500 resize-none focus:outline-none transition-colors"
+              style={{
+                background: 'rgba(255,255,255,0.04)',
+                border: '1px solid rgba(29,78,216,0.25)',
+              }}
+              rows={4}
+            />
 
-          {/* Bottom row: examples + scan button */}
-          <div className="mt-3 space-y-2">
-            <div className="flex flex-wrap items-center gap-1.5">
+            {/* Example shortcuts */}
+            <div className="flex flex-wrap items-center gap-1.5 mt-3 mb-4">
               <span className="text-xs text-slate-500">Try:</span>
               {EXAMPLES.map(ex => (
                 <button
                   key={ex.label}
                   onClick={() => { setContent(ex.text); setResult(null); setError(""); }}
-                  className="text-xs text-indigo-400 hover:text-indigo-300 border border-indigo-500/20 hover:border-indigo-500/40 px-2 py-0.5 rounded-full transition-all"
+                  className="text-xs text-blue-400 hover:text-blue-300 border border-blue-700/30 hover:border-blue-500/50 px-2.5 py-0.5 rounded-full transition-all"
                 >
                   {ex.label}
                 </button>
               ))}
             </div>
+
+            {/* Scan CTA */}
             <button
               onClick={handleScan}
               disabled={loading || !content.trim()}
-              className="w-full flex items-center justify-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-5 py-2.5 rounded-xl transition-all text-sm"
+              className="btn-liquid w-full flex items-center justify-center gap-2 font-bold text-sm text-white px-6 py-3 rounded-xl transition-all disabled:opacity-40 disabled:cursor-not-allowed"
+              style={{ background: 'linear-gradient(135deg, #1e40af, #1d4ed8)', boxShadow: '0 2px 16px rgba(29,78,216,0.35)' }}
             >
               {loading ? (
                 <><span className="inline-block w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />Scanning…</>
               ) : (
-                <>🔍 Scan now</>
+                <>✓ Scan for compliance</>
               )}
             </button>
-          </div>
 
-          {/* What we check — compact chips */}
-          <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-white/5">
-            <span className="text-xs text-slate-500 mr-1">Checks:</span>
-            {CHECKS.map(c => (
-              <span key={c} className="text-xs text-slate-500 border border-white/8 px-2 py-0.5 rounded-full">{c}</span>
-            ))}
+            {/* What we check */}
+            <div className="flex flex-wrap gap-1.5 mt-4 pt-4 border-t border-white/5">
+              <span className="text-xs text-slate-500 mr-1">Checks:</span>
+              {CHECKS.map(c => (
+                <span key={c} className="text-xs text-slate-500 border border-white/[0.08] px-2 py-0.5 rounded-full">{c}</span>
+              ))}
+            </div>
           </div>
+        </section>
+
+        {/* Trust pills */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-12 -mt-8">
+          {[
+            { icon: "🔒", label: "GDPR Ready" },
+            { icon: "⚡", label: "Instant answers" },
+            { icon: "📋", label: "Plain English" },
+            { icon: "🏭", label: "Industry-specific" },
+          ].map(pill => (
+            <span key={pill.label} className="pill-glass text-xs font-semibold px-4 py-1.5 rounded-full" style={{ color: '#bfdbfe' }}>
+              {pill.icon} {pill.label}
+            </span>
+          ))}
         </div>
 
         {/* Error */}
         {error && (
-          <div className="issue-red rounded-xl p-4 mt-4 fade-in text-sm text-red-300">
+          <div className="issue-red rounded-xl p-4 mb-6 fade-in text-sm text-red-300">
             ⚠️ {error}
           </div>
         )}
 
         {/* Results */}
         {result && (
-          <div className="fade-in space-y-4 mt-6">
+          <div className="fade-in space-y-4 mb-10">
 
-            {/* Score bar */}
-            <div className="glass rounded-2xl p-5 flex items-center gap-5">
+            {/* Score card */}
+            <div className="glass-liquid rounded-2xl p-5 reveal-3d flex items-center gap-5">
               <ScoreCircle score={result.overallScore} />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
@@ -268,14 +295,14 @@ export default function Home() {
             {/* Issues */}
             {result.issues.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+                <p className="text-xs font-semibold text-blue-300/60 uppercase tracking-widest mb-2">
                   Issues Found ({result.issues.length})
                 </p>
                 <div className="space-y-2">
                   {result.issues.map((issue, i) => (
                     <div
                       key={i}
-                      className={`${severityClass(issue.severity)} rounded-xl p-4 cursor-pointer transition-all`}
+                      className={`${severityClass(issue.severity)} reveal-3d rounded-xl p-4 cursor-pointer transition-all`}
                       onClick={() => setExpandedIssue(expandedIssue === i ? null : i)}
                     >
                       <div className="flex items-start justify-between gap-3">
@@ -296,7 +323,7 @@ export default function Home() {
                           </div>
                           <div>
                             <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Regulation</p>
-                            <p className="text-xs text-indigo-300">{issue.law}</p>
+                            <p className="text-xs text-blue-300">{issue.law}</p>
                           </div>
                         </div>
                       )}
@@ -308,8 +335,8 @@ export default function Home() {
 
             {/* Positives */}
             {result.positives.length > 0 && (
-              <div className="glass rounded-xl p-4">
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">What you did right</p>
+              <div className="glass-liquid rounded-2xl p-5 reveal-3d">
+                <p className="text-xs font-semibold text-blue-300/60 uppercase tracking-widest mb-3">What you did right</p>
                 <div className="space-y-1.5">
                   {result.positives.map((p, i) => (
                     <div key={i} className="flex items-start gap-2 text-xs text-slate-400">
@@ -322,14 +349,14 @@ export default function Home() {
             )}
 
             {/* New scan CTA */}
-            <div className="flex items-center justify-between glass rounded-xl p-4">
+            <div className="glass-liquid reveal-3d rounded-2xl p-5 flex items-center justify-between gap-4">
               <div>
                 <p className="text-sm font-semibold text-white">Scan another piece of content</p>
                 <p className="text-xs text-slate-500 mt-0.5">Free, no account needed</p>
               </div>
               <button
                 onClick={() => { setContent(""); setResult(null); setError(""); }}
-                className="text-sm border border-indigo-500/40 text-indigo-400 hover:bg-indigo-500/10 px-4 py-1.5 rounded-xl transition-all whitespace-nowrap"
+                className="text-sm border font-semibold border-blue-600/40 text-blue-400 hover:bg-blue-600/10 px-4 py-1.5 rounded-xl transition-all whitespace-nowrap"
               >
                 New Scan
               </button>
@@ -337,19 +364,19 @@ export default function Home() {
           </div>
         )}
 
-        {/* Ad — after scan results, high attention */}
-        {result && <AdUnit size="banner" className="mt-6" />}
+        {/* Ad — after results */}
+        {result && <AdUnit size="banner" className="mb-10" />}
 
         {/* How it works */}
-        <section id="how" className="mt-16">
-          <h2 className="text-xl font-bold text-white text-center mb-6">How it works</h2>
+        <section id="how" className="mt-4 mb-12">
+          <h2 className="text-xl font-bold text-white text-center mb-6 tracking-tight">How it works</h2>
           <div className="grid sm:grid-cols-3 gap-3">
             {[
               { icon: "📋", step: "1", title: "Paste your content", desc: "Any social post, ad copy, email, or website text." },
               { icon: "🤖", step: "2", title: "AI scans instantly", desc: "Checks 8 compliance categories in seconds." },
               { icon: "🛠️", step: "3", title: "Get exact fixes", desc: "Each issue includes what to fix and which law applies." },
             ].map(item => (
-              <div key={item.step} className="glass rounded-xl p-4 text-center">
+              <div key={item.step} className="glass-liquid rounded-2xl p-5 text-center reveal-3d">
                 <div className="text-2xl mb-2">{item.icon}</div>
                 <span className="badge-blue text-xs px-2 py-0.5 rounded-full inline-block mb-1.5">Step {item.step}</span>
                 <h3 className="font-semibold text-white text-sm mb-1">{item.title}</h3>
@@ -360,8 +387,8 @@ export default function Home() {
         </section>
 
         {/* Who it's for */}
-        <section className="mt-10">
-          <h2 className="text-xl font-bold text-white text-center mb-6">Who uses ComplyScan?</h2>
+        <section className="mb-12">
+          <h2 className="text-xl font-bold text-white text-center mb-6 tracking-tight">Who uses ComplyBuddy?</h2>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
               { icon: "📱", title: "Influencers", desc: "Never miss an #ad disclosure again." },
@@ -369,7 +396,7 @@ export default function Home() {
               { icon: "📣", title: "Marketers", desc: "Validate campaigns before launch." },
               { icon: "⚖️", title: "Legal Teams", desc: "Quick pre-publish sanity check." },
             ].map(item => (
-              <div key={item.title} className="glass rounded-xl p-4">
+              <div key={item.title} className="glass-liquid rounded-2xl p-4 reveal-3d">
                 <div className="text-xl mb-1.5">{item.icon}</div>
                 <h3 className="font-semibold text-white text-sm mb-1">{item.title}</h3>
                 <p className="text-xs text-slate-400">{item.desc}</p>
@@ -378,20 +405,20 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Ad — between who it's for and FAQ */}
-        <AdUnit size="rectangle" className="mt-8" />
+        {/* Ad — between sections */}
+        <AdUnit size="rectangle" className="mb-10" />
 
         {/* FAQ */}
-        <section id="faq" className="mt-10">
-          <h2 className="text-xl font-bold text-white text-center mb-6">FAQ</h2>
+        <section id="faq" className="mb-4">
+          <h2 className="text-xl font-bold text-white text-center mb-6 tracking-tight">FAQ</h2>
           <div className="space-y-2 max-w-xl mx-auto">
             {[
-              { q: "Is this legal advice?", a: "No. ComplyScan is an AI-powered educational tool. Consult a qualified lawyer for serious compliance matters." },
+              { q: "Is this legal advice?", a: "No. ComplyBuddy is an AI-powered educational tool. Consult a qualified lawyer for serious compliance matters." },
               { q: "Which regulations does it cover?", a: "FTC (US), GDPR (EU), DPDP Act 2023 (India), ASCI guidelines, copyright basics, and platform ad policies (Instagram, YouTube, TikTok, LinkedIn)." },
               { q: "Is my content stored?", a: "No. Your content is sent to the AI for analysis only and is never stored or logged." },
               { q: "How accurate is it?", a: "High accuracy for common issues but not infallible. Best used as a first-pass check — always verify high-severity flags." },
             ].map(item => (
-              <div key={item.q} className="glass rounded-xl p-4">
+              <div key={item.q} className="glass-liquid rounded-2xl p-5 reveal-3d">
                 <p className="font-semibold text-white text-sm mb-1">{item.q}</p>
                 <p className="text-xs text-slate-400 leading-relaxed">{item.a}</p>
               </div>
@@ -401,8 +428,17 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 py-6 text-center text-xs text-slate-500">
-        <p>🛡️ <strong className="text-slate-400">ComplyScan</strong> — AI compliance checker for content creators and businesses</p>
+      <footer className="border-t border-blue-900/20 py-8 text-center text-xs text-slate-500">
+        <div className="flex items-center justify-center gap-2 mb-1">
+          <span
+            className="inline-flex items-center justify-center w-5 h-5 rounded text-xs font-bold"
+            style={{ background: 'linear-gradient(135deg, #1e40af, #1d4ed8)', color: '#bfdbfe' }}
+          >
+            ✓
+          </span>
+          <strong className="text-slate-400 font-semibold">ComplyBuddy</strong>
+          <span>— AI compliance checker for content creators and businesses</span>
+        </div>
         <p className="mt-1">Not legal advice. For educational purposes only.</p>
       </footer>
     </div>
