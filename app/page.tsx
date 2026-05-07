@@ -117,8 +117,8 @@ export default function Home() {
       {/* Noise overlay */}
       <div className="noise-overlay" aria-hidden="true" />
       {/* Ambient orbs */}
-      <div className="orb orb-1" style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.15), transparent 70%)' }} aria-hidden="true" />
-      <div className="orb orb-2" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.10), transparent 70%)', animationDelay: '-7s' }} aria-hidden="true" />
+      <div className="liquid-blob liquid-blob-1" style={{ background: 'radial-gradient(circle, rgba(79,70,229,0.15), transparent 70%)' }} aria-hidden="true" />
+      <div className="liquid-blob liquid-blob-2" style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.10), transparent 70%)', animationDelay: '-7s' }} aria-hidden="true" />
 
       {/* Header — Legal Trust Platform */}
       <header className="border-b border-indigo-900/30 backdrop-blur-xl sticky top-0 z-20" style={{ background: 'rgba(5,8,16,0.92)' }}>
