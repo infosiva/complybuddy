@@ -1,38 +1,72 @@
 @import "tailwindcss";
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { background: #0a0a0f; color: #e2e8f0; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; }
+:root {
+  --base-bg: #07060f;
+  --surface-1: #0f0e1a;
+  --surface-2: #16152a;
+  --border: #2a2740;
+  --text-primary: #f0eeff;
+  --text-secondary: #a09db8;
+  --text-muted: #6b6884;
+  --accent-h: 38; --accent-s: 92%; --accent-l: 50%;
+  --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+  --accent-subtle: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.12);
+  --accent-glow: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.35);
+  --glass-bg: rgb(7 6 15 / 0.75);
+  --glass-border: rgb(255 255 255 / 0.06);
+  --glass-border-hover: rgb(255 255 255 / 0.12);
+  --radius: 0.75rem;
+}
+
+html { scroll-behavior: smooth }
+
+body {
+  background: var(--base-bg);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
 
 body::before {
   content: '';
-  position: fixed;
-  inset: 0;
-  background-image: radial-gradient(rgba(99,102,241,0.15) 1px, transparent 1px);
-  background-size: 28px 28px;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.6;
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 10%, hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 85% 80%, hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) + 20%) / 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 50% 50%, rgb(99 102 241 / 0.04) 0%, transparent 70%);
 }
 
 .glass {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  transition: border-color 0.2s ease;
+}
+.glass:hover { border-color: var(--glass-border-hover); }
+
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-8px) } to { opacity: 1; transform: translateY(0) } }
+@keyframes spin { to { transform: rotate(360deg) } }
+@keyframes ping { 75%, 100% { transform: scale(2); opacity: 0 } }
+@keyframes pulse { 0%, 100% { opacity: 1 } 50% { opacity: .5 } }
+
+.animate-fadeUp { animation: fadeUp 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards }
+.animate-fadeIn { animation: fadeIn 0.4s ease forwards }
+.animate-spin { animation: spin 1s linear infinite }
+.animate-ping { animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite }
+.animate-pulse { animation: pulse 2s ease-in-out infinite }
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--text-primary) 30%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.issue-red    { border-left: 3px solid #ef4444; background: rgba(239,68,68,0.06); }
-.issue-amber  { border-left: 3px solid #f59e0b; background: rgba(245,158,11,0.06); }
-.issue-green  { border-left: 3px solid #22c55e; background: rgba(34,197,94,0.06); }
-
-.badge-red    { background: rgba(239,68,68,0.15);  color: #fca5a5; border: 1px solid rgba(239,68,68,0.3); }
-.badge-amber  { background: rgba(245,158,11,0.15); color: #fcd34d; border: 1px solid rgba(245,158,11,0.3); }
-.badge-green  { background: rgba(34,197,94,0.15);  color: #86efac; border: 1px solid rgba(34,197,94,0.3); }
-.badge-blue   { background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.3); }
-
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
-
-@keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
-.fade-in { animation: fadeIn 0.4s ease both; }
+.delay-100 { animation-delay: 100ms }
+.delay-200 { animation-delay: 200ms }
+.delay-300 { animation-delay: 300ms }
