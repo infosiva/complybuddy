@@ -405,9 +405,6 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Ad — between sections */}
-        <AdUnit size="rectangle" className="mb-10" />
-
         {/* FAQ */}
         <section id="faq" className="mb-4">
           <h2 className="text-xl font-bold text-white text-center mb-6 tracking-tight">FAQ</h2>
@@ -425,6 +422,9 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        {/* Ad — bottom of page */}
+        <AdUnit size="banner" className="mb-6" />
       </main>
 
       {/* Footer */}
