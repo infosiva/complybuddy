@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import AdUnit from "@/components/AdUnit";
+import { useGate } from '@/lib/shared/useGate'
+import RegisterGate from '@/lib/shared/RegisterGate'
 
 type Severity = "high" | "medium" | "low";
 type ContentType = "social media post" | "website copy" | "ad creative" | "email campaign" | "blog post";
@@ -83,6 +85,7 @@ function ScoreCircle({ score }: { score: number }) {
 }
 
 export default function Home() {
+  const { count: gateCount, showGate, increment: gateIncrement, onRegistered, dismissGate } = useGate('complybuddy', 3)
   const [content, setContent] = useState("");
   const [contentType, setContentType] = useState<ContentType>("social media post");
   const [loading, setLoading] = useState(false);
@@ -92,6 +95,8 @@ export default function Home() {
 
   async function handleScan() {
     if (!content.trim()) return;
+    const allowed = await gateIncrement();
+    if (!allowed) return;
     setLoading(true);
     setResult(null);
     setError("");
@@ -113,6 +118,19 @@ export default function Home() {
   }
 
   return (
+    <>
+    {showGate && (
+      <RegisterGate
+        freeUsed={gateCount}
+        freeLimit={3}
+        freeFeature="scans"
+        lockedFeature="unlimited compliance scans"
+        accentColor="#6366f1"
+        site="complybuddy"
+        onSuccess={onRegistered}
+        onDismiss={dismissGate}
+      />
+    )}
     <div className="relative min-h-screen z-10 flex flex-col" style={{ background: 'linear-gradient(160deg, #0a0f1e 0%, #0d1529 50%, #0a0f1e 100%)' }}>
       {/* Noise overlay */}
       <div className="noise-overlay" aria-hidden="true" />
@@ -442,5 +460,6 @@ export default function Home() {
         <p className="mt-1">Not legal advice. For educational purposes only.</p>
       </footer>
     </div>
+    </>
   );
 }
