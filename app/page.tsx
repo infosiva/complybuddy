@@ -4,6 +4,13 @@ import { useState } from "react";
 import AdUnit from "@/components/AdUnit";
 import { useGate } from '@/lib/shared/useGate'
 import RegisterGate from '@/lib/shared/RegisterGate'
+import GuidedTour, { type TourStep } from '@/components/GuidedTour'
+
+const COMPLY_TOUR: TourStep[] = [
+  { target: '#scan-input', title: 'Paste your content', icon: '📋', body: 'Paste any social post, ad copy, or email — ComplyBuddy checks it against GDPR, FTC, ASA and more.', placement: 'bottom' },
+  { target: '#scan-btn', title: 'Scan in seconds', icon: '🔍', body: 'AI checks for compliance issues instantly — no account needed for your first 3 scans.', placement: 'top' },
+  { target: '#compliance-standards', title: 'Covers all major laws', icon: '⚖️', body: 'GDPR, FTC, COPPA, ASA — one tool for all global compliance rules.', placement: 'top' },
+]
 
 type Severity = "high" | "medium" | "low";
 type ContentType = "social media post" | "website copy" | "ad creative" | "email campaign" | "blog post";
@@ -226,7 +233,7 @@ export default function Home() {
       <section className="relative z-10 pt-20 pb-10 px-5 text-center max-w-4xl mx-auto w-full">
 
         {/* Compliance framework badges row */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
+        <div id="compliance-standards" className="flex flex-wrap items-center justify-center gap-2 mb-8">
           {COMPLIANCE_STANDARDS.map(std => (
             <span key={std}
               className="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.12em] px-3 py-1 rounded"
@@ -314,6 +321,7 @@ export default function Home() {
 
             <div className="p-5">
               <textarea
+                id="scan-input"
                 value={content}
                 onChange={e => setContent(e.target.value)}
                 placeholder={`Paste your ${contentType} here…`}
@@ -343,6 +351,7 @@ export default function Home() {
 
               {/* Scan CTA */}
               <button
+                id="scan-btn"
                 onClick={handleScan}
                 disabled={loading || !content.trim()}
                 className="w-full flex items-center justify-center gap-2.5 font-bold text-sm text-white px-6 py-3.5 rounded-lg transition-all disabled:opacity-40 disabled:cursor-not-allowed"
@@ -756,6 +765,7 @@ export default function Home() {
         <AdUnit size="banner" />
       </div>
 
+      <GuidedTour steps={COMPLY_TOUR} storageKey="complybuddy_tour_v1" accentColor="#3b82f6" />
     </div>
     </>
   );
