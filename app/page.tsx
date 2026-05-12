@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AdUnit from "@/components/AdUnit";
 import { useGate } from '@/lib/shared/useGate'
 import RegisterGate from '@/lib/shared/RegisterGate'
@@ -128,11 +128,61 @@ export default function Home() {
   const [result, setResult] = useState<ScanResult | null>(null);
   const [error, setError] = useState("");
   const [expandedIssue, setExpandedIssue] = useState<number | null>(null);
+  const [checkingOut, setCheckingOut] = useState(false);
+  const [isPro, setIsPro] = useState(false);
+
+  // Check pro status on load + after upgrade redirect
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const userRaw = localStorage.getItem('auth_user');
+    if (!userRaw) return;
+    try {
+      const user = JSON.parse(userRaw);
+      fetch(`/api/pro-status?email=${encodeURIComponent(user.email)}`)
+        .then(r => r.json())
+        .then(d => {
+          if (d.pro) setIsPro(true);
+        }).catch(() => {});
+      if (params.get('upgraded') === '1') {
+        setIsPro(true);
+        window.history.replaceState({}, '', '/');
+      }
+    } catch {}
+  }, []);
+
+  async function handleUpgrade() {
+    const userRaw = typeof window !== 'undefined' ? localStorage.getItem('auth_user') : null;
+    const email = userRaw ? (() => { try { return JSON.parse(userRaw).email } catch { return '' } })() : '';
+    if (!email) {
+      // Not logged in — show auth gate first
+      alert('Please sign in first, then click Upgrade.');
+      return;
+    }
+    setCheckingOut(true);
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+      else setError(data.error || 'Checkout failed');
+    } catch {
+      setError('Checkout failed — please try again');
+    } finally {
+      setCheckingOut(false);
+    }
+  }
 
   async function handleScan() {
     if (!content.trim()) return;
-    const allowed = await gateIncrement();
-    if (!allowed) return;
+    // Pro users skip the gate entirely
+    if (!isPro) {
+      const allowed = await gateIncrement();
+      if (!allowed) return;
+    }
     setLoading(true);
     setResult(null);
     setError("");
@@ -331,8 +381,16 @@ export default function Home() {
                   border: '1px solid rgba(29,78,216,0.2)',
                   lineHeight: '1.7',
                 }}
-                rows={4}
+                rows={6}
               />
+              <div className="flex justify-between items-center mt-1.5">
+                <span className="text-[10px] font-mono" style={{ color: content.length > 3800 ? '#f87171' : '#475569' }}>
+                  {content.length > 0 ? `${content.length}/4000 chars` : ''}
+                </span>
+                {content.length > 3800 && (
+                  <span className="text-[10px] font-mono" style={{ color: '#fbbf24' }}>Content will be trimmed at 4,000 chars</span>
+                )}
+              </div>
 
               {/* Example shortcuts */}
               <div className="flex flex-wrap items-center gap-1.5 mt-3 mb-4">
@@ -662,13 +720,15 @@ export default function Home() {
               ))}
             </div>
             <button
-              className="w-full py-2.5 rounded-lg text-sm font-bold text-white transition-all"
+              onClick={handleUpgrade}
+              disabled={checkingOut || isPro}
+              className="w-full py-2.5 rounded-lg text-sm font-bold text-white transition-all disabled:opacity-60 disabled:cursor-not-allowed"
               style={{
                 background: 'linear-gradient(135deg, #1e40af, #1d4ed8)',
                 boxShadow: '0 4px 20px rgba(29,78,216,0.4)',
               }}
             >
-              Get Pro — $9/mo →
+              {isPro ? '✓ You\'re on Pro' : checkingOut ? 'Redirecting…' : 'Get Pro — $9/mo →'}
             </button>
           </div>
         </div>
