@@ -37,6 +37,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           "applicationCategory": "BusinessApplication", "operatingSystem": "Web",
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" }
         })}} />
+      
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <style dangerouslySetInnerHTML={{ __html: `
+          :root {
+            --theme-primary: #2563eb;
+            --theme-secondary: #1d4ed8;
+            --theme-base: #020b1a;
+            --background: #020b1a;
+            --surface-1: #071428;
+            --surface-2: #0d2040;
+            --foreground: #f8fafc;
+            --text-2: #93c5fd;
+            --border-default: rgba(37,99,235,0.15);
+            --border-strong: rgba(37,99,235,0.3);
+            --radius: 0.375rem;
+            --radius-lg: 0.5rem;
+          }
+          body { font-family: 'IBM Plex Sans', system-ui, sans-serif !important; }
+          h1, h2, h3 { font-weight: 600 !important; letter-spacing: -0.01em; }
+          .glass { background: rgba(2,11,26,0.75) !important; border-color: rgba(37,99,235,0.12) !important; }
+        ` }} />
       </head>
       <body className="flex flex-col min-h-screen">
         <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4237294630161176" crossOrigin="anonymous" strategy="lazyOnload" />
