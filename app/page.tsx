@@ -277,10 +277,37 @@ export default function Home() {
         .dot-1 { animation: dotBlink 1.4s ease-in-out infinite; }
         .dot-2 { animation: dotBlink 1.4s ease-in-out 0.2s infinite; }
         .dot-3 { animation: dotBlink 1.4s ease-in-out 0.4s infinite; }
+        .cb-nav { position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:0 24px; height:52px; background:rgba(10,22,40,0.85); border-bottom:1px solid rgba(29,78,216,0.18); backdrop-filter:blur(16px); }
+        .cb-nav-logo { font-size:15px; font-weight:900; letter-spacing:-0.5px; color:#fff; display:flex; align-items:center; gap:8px; }
+        .cb-nav-links { display:flex; align-items:center; gap:20px; }
+        .cb-nav-link { font-size:13px; color:rgba(255,255,255,0.45); text-decoration:none; font-weight:500; cursor:pointer; border:none; background:none; }
+        .cb-nav-link:hover { color:#93c5fd; }
+        .cb-nav-cta { font-size:12px; font-weight:700; padding:7px 16px; border-radius:8px; background:linear-gradient(135deg,#1e40af,#1d4ed8); color:#fff; border:none; cursor:pointer; letter-spacing:0.02em; }
+        @media(max-width:640px) {
+          .cb-nav-links { display:none; }
+          .cb-hero-h1 { font-size:2rem !important; }
+          .cb-scanner-grid { grid-template-columns:1fr !important; }
+          .cb-pricing-grid { grid-template-columns:1fr !important; }
+          .cb-use-grid { grid-template-columns:1fr 1fr !important; }
+          .cb-std-grid { flex-wrap:wrap; }
+        }
       `}</style>
 
+      {/* ── NAV ── */}
+      <nav className="cb-nav">
+        <div className="cb-nav-logo">
+          <span style={{ fontSize:18 }}>⚖️</span>
+          <span>Comply<span style={{ color:'#60a5fa' }}>Scan</span></span>
+        </div>
+        <div className="cb-nav-links">
+          <a className="cb-nav-link" onClick={() => document.getElementById('scan-input')?.scrollIntoView({ behavior:'smooth' })}>Scanner</a>
+          <a className="cb-nav-link" onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior:'smooth' })}>Pricing</a>
+          <button className="cb-nav-cta" onClick={() => document.getElementById('scan-input')?.focus()}>Try free →</button>
+        </div>
+      </nav>
+
       {/* ── HERO ── */}
-      <section className="relative z-10 pt-20 pb-10 px-5 text-center max-w-4xl mx-auto w-full">
+      <section className="relative z-10 pt-10 pb-8 px-5 text-center max-w-4xl mx-auto w-full">
 
         {/* Compliance framework badges row */}
         <div id="compliance-standards" className="flex flex-wrap items-center justify-center gap-2 mb-8">
@@ -301,7 +328,7 @@ export default function Home() {
         </div>
 
         {/* Main headline */}
-        <h1 className="text-4xl md:text-[3.5rem] font-black text-white mb-4 leading-[1.05]" style={{ letterSpacing: '-0.03em' }}>
+        <h1 className="cb-hero-h1 font-black text-white mb-4 leading-[1.05]" style={{ fontSize: '3rem', letterSpacing: '-0.03em' }}>
           Scan your content for<br />
           <span style={{
             background: 'linear-gradient(90deg, #60a5fa 0%, #818cf8 50%, #60a5fa 100%)',
@@ -320,7 +347,7 @@ export default function Home() {
 
         {/* Sub-trust line */}
         <p className="text-slate-500 text-xs mb-10">
-          Used by 2,400+ marketers, creators, and legal teams &nbsp;·&nbsp; No account needed to start
+          Free to start &nbsp;·&nbsp; No account needed &nbsp;·&nbsp; Results in seconds
         </p>
 
         {/* ── SCANNER CARD ── */}
@@ -655,7 +682,7 @@ export default function Home() {
           <p className="text-slate-400 text-sm mt-2">Start free. Upgrade when you need more.</p>
         </div>
 
-        <div className="grid sm:grid-cols-2 gap-5 max-w-2xl mx-auto">
+        <div className="cb-pricing-grid" style={{ display:'grid', gridTemplateColumns:'repeat(2,1fr)', gap:20, maxWidth:640, margin:'0 auto' }}>
 
           {/* FREE plan */}
           <div className="rounded-xl p-6"
@@ -740,7 +767,7 @@ export default function Home() {
           <p className="text-[11px] font-bold tracking-[0.18em] uppercase font-mono mb-2" style={{ color: '#3b82f6' }}>Use cases</p>
           <h2 className="text-2xl font-black text-white" style={{ letterSpacing: '-0.02em' }}>Built for every team</h2>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="cb-use-grid" style={{ display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:12 }}>
           {[
             { icon: "📱", title: "Influencers", desc: "Never miss an #ad disclosure again." },
             { icon: "🏪", title: "Small Businesses", desc: "Meet GDPR and advertising standards." },
@@ -825,8 +852,76 @@ export default function Home() {
         <AdUnit size="banner" />
       </div>
 
+      {/* ── FOOTER ── */}
+      <footer className="relative z-10 border-t" style={{ borderColor:'rgba(29,78,216,0.15)', padding:'32px 24px 24px', marginTop:8 }}>
+        <div style={{ maxWidth:960, margin:'0 auto' }}>
+          <div style={{ display:'flex', flexWrap:'wrap', justifyContent:'space-between', gap:24, marginBottom:24 }}>
+            <div>
+              <div style={{ fontSize:16, fontWeight:900, color:'#fff', marginBottom:6 }}>⚖️ Comply<span style={{ color:'#60a5fa' }}>Scan</span></div>
+              <p style={{ fontSize:12, color:'rgba(255,255,255,0.3)', maxWidth:220, lineHeight:1.6 }}>AI compliance scanner for marketers, creators, and legal teams. Not legal advice.</p>
+            </div>
+            <div style={{ display:'flex', gap:40, flexWrap:'wrap' }}>
+              <div>
+                <p style={{ fontSize:11, fontWeight:700, color:'rgba(255,255,255,0.25)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:10 }}>Product</p>
+                <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
+                  {['Scanner', 'Pricing', 'Frameworks covered'].map(l => (
+                    <a key={l} style={{ fontSize:12, color:'rgba(255,255,255,0.4)', textDecoration:'none', cursor:'pointer' }}>{l}</a>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <p style={{ fontSize:11, fontWeight:700, color:'rgba(255,255,255,0.25)', textTransform:'uppercase', letterSpacing:'0.1em', marginBottom:10 }}>Company</p>
+                <div style={{ display:'flex', flexDirection:'column', gap:6 }}>
+                  {['About us', 'Contact', 'Privacy policy', 'Cookie policy'].map(l => (
+                    <a key={l} style={{ fontSize:12, color:'rgba(255,255,255,0.4)', textDecoration:'none', cursor:'pointer' }}>{l}</a>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:12, paddingTop:16, borderTop:'1px solid rgba(29,78,216,0.1)' }}>
+            <p style={{ fontSize:11, color:'rgba(255,255,255,0.2)' }}>© {new Date().getFullYear()} ComplyScan. For informational use only — not legal advice.</p>
+            <div style={{ display:'flex', gap:16 }}>
+              {['Privacy', 'Cookies', 'Terms'].map(l => (
+                <a key={l} style={{ fontSize:11, color:'rgba(255,255,255,0.25)', textDecoration:'none', cursor:'pointer' }}>{l}</a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      {/* ── COOKIE BANNER ── */}
+      <CookieBanner />
+
       <GuidedTour steps={COMPLY_TOUR} storageKey="complybuddy_tour_v1" accentColor="#3b82f6" />
     </div>
     </>
   );
+}
+
+function CookieBanner() {
+  const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const accepted = localStorage.getItem('cb_cookies_ok')
+    if (!accepted) setVisible(true)
+  }, [])
+  if (!visible) return null
+  return (
+    <div style={{ position:'fixed', bottom:0, left:0, right:0, zIndex:100, padding:'12px 24px', background:'rgba(10,22,40,0.96)', borderTop:'1px solid rgba(29,78,216,0.3)', backdropFilter:'blur(12px)', display:'flex', alignItems:'center', justifyContent:'space-between', gap:16, flexWrap:'wrap' }}>
+      <p style={{ fontSize:12, color:'rgba(255,255,255,0.55)', maxWidth:600, lineHeight:1.5 }}>
+        We use essential cookies to keep the scanner working. No tracking cookies, no third-party advertising.{' '}
+        <a style={{ color:'#60a5fa', textDecoration:'underline', cursor:'pointer' }}>Cookie policy</a>
+      </p>
+      <div style={{ display:'flex', gap:10 }}>
+        <button onClick={() => { localStorage.setItem('cb_cookies_ok', '1'); setVisible(false) }}
+          style={{ fontSize:12, fontWeight:700, padding:'7px 20px', borderRadius:8, background:'linear-gradient(135deg,#1e40af,#1d4ed8)', color:'#fff', border:'none', cursor:'pointer' }}>
+          Accept
+        </button>
+        <button onClick={() => setVisible(false)}
+          style={{ fontSize:12, fontWeight:500, padding:'7px 14px', borderRadius:8, background:'transparent', color:'rgba(255,255,255,0.35)', border:'1px solid rgba(255,255,255,0.1)', cursor:'pointer' }}>
+          Decline
+        </button>
+      </div>
+    </div>
+  )
 }
