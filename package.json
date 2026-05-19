@@ -10,8 +10,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.92.0",
-    "@siva/shared-ui": "file:../shared-ui",
-    "@stripe/stripe-js": "^9.4.0",
+"@stripe/stripe-js": "^9.4.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.39.0",
     "lucide-react": "^1.14.0",
