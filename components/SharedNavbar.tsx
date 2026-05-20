@@ -1,4 +1,5 @@
 'use client'
+import React from 'react'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 
@@ -8,7 +9,7 @@ export interface BrandConfig {
   navLinks?: NavLink[]; cta?: { label: string; href: string }
 }
 
-export default function SharedNavbar({ brand }: { brand: BrandConfig }) {
+export default function SharedNavbar({ brand, authSlot }: { brand: BrandConfig; authSlot?: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -68,8 +69,8 @@ export default function SharedNavbar({ brand }: { brand: BrandConfig }) {
             </div>
           )}
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center">
+          {/* Desktop CTA + auth */}
+          <div className="hidden md:flex items-center gap-2">
             <Link
               href={cta.href}
               className="px-3.5 py-1.5 text-[13px] font-medium rounded-lg border transition-all duration-150 hover:-translate-y-px active:translate-y-0"
@@ -81,6 +82,7 @@ export default function SharedNavbar({ brand }: { brand: BrandConfig }) {
             >
               {cta.label}
             </Link>
+            {authSlot}
           </div>
 
           {/* Mobile toggle */}

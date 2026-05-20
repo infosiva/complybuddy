@@ -65,10 +65,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex flex-col min-h-screen">
         <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4237294630161176" crossOrigin="anonymous" strategy="lazyOnload" />
         <DesignEffects />
-        <SharedNavbar brand={brand} />
-        <div style={{ position: "fixed", top: "10px", right: "16px", zIndex: 60 }}>
-          <AuthButton />
-        </div>
+        <SharedNavbar brand={brand} authSlot={<AuthButton />} />
         <main className="flex-1 pt-16">{children}</main>
         <AffiliateStrip />
         <Footer siteName="ComplyScan" />
