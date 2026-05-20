@@ -4,7 +4,8 @@ import './globals.css'
 import SharedNavbar from '@/components/SharedNavbar'
 import Footer from '../components/Footer'
 import DesignEffects from '@/components/DesignEffects'
-import ChatBot from '@/components/ChatBot'
+import AuthButton from '@/components/AuthButton'
+import AffiliateStrip from '@/components/AffiliateStrip'
 import type { BrandConfig } from '@/components/SharedNavbar'
 import CookieConsent from "../components/CookieConsent";
 
@@ -65,9 +66,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4237294630161176" crossOrigin="anonymous" strategy="lazyOnload" />
         <DesignEffects />
         <SharedNavbar brand={brand} />
+        <div style={{ position: "fixed", top: "10px", right: "16px", zIndex: 60 }}>
+          <AuthButton />
+        </div>
         <main className="flex-1 pt-16">{children}</main>
+        <AffiliateStrip />
         <Footer siteName="ComplyScan" />
-        <ChatBot />
         <script src="http://31.97.56.148:3098/t.js" data-site="complyscan.app" defer></script>
       <CookieConsent />
       </body>
