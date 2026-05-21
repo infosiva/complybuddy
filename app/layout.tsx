@@ -23,7 +23,8 @@ export const metadata: Metadata = {
   title: 'ComplyScan — AI Compliance Checker',
   description: 'Instantly scan social media posts, ads and website content for GDPR, FTC and copyright compliance issues. Free AI-powered compliance scanner.',
   keywords: ['compliance scanner', 'GDPR compliance', 'FTC disclosure', 'social media compliance', 'copyright checker'],
-  openGraph: { title: 'ComplyScan — AI Compliance Checker', description: 'Scan your content for legal compliance issues in seconds.', type: 'website', locale: 'en_GB', siteName: 'ComplyScan', url: 'https://complyscan.app' },
+  metadataBase: new URL('https://complyscan.app'),
+  openGraph: { title: 'ComplyScan — AI Compliance Checker', description: 'Scan your content for legal compliance issues in seconds.', type: 'website', locale: 'en_GB', siteName: 'ComplyScan', url: 'https://complyscan.app', images: [{ url: '/og.png', width: 1200, height: 630 }] },
   twitter: { card: 'summary_large_image', title: 'ComplyScan', description: 'AI compliance checker for GDPR, FTC and copyright.' },
   robots: { index: true, follow: true },
 }
