@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 declare global {
   interface Window { adsbygoogle: unknown[] }
@@ -34,13 +34,34 @@ interface AdUnitProps {
 
 export default function AdUnit({ size = 'rectangle', className = '' }: AdUnitProps) {
   const [idx, setIdx] = useState(0)
+  const [show, setShow] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Push AdSense unit
+    // Only show ads after element scrolls into view (not on landing)
+    let timer: ReturnType<typeof setTimeout>
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          timer = setTimeout(() => setShow(true), 500)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '0px 0px -20% 0px' }
+    )
+    if (ref.current) observer.observe(ref.current)
+    return () => { observer.disconnect(); clearTimeout(timer) }
+  }, [])
+
+  useEffect(() => {
+    if (!show) return
     try {
       window.adsbygoogle = window.adsbygoogle || []
       window.adsbygoogle.push({})
     } catch { /* not loaded yet */ }
+  }, [show])
+
+  useEffect(() => {
     // Rotate affiliate fallback
     const t = setInterval(() => setIdx(i => (i + 1) % AFFILIATES.length), 8000)
     return () => clearInterval(t)
@@ -50,15 +71,14 @@ export default function AdUnit({ size = 'rectangle', className = '' }: AdUnitPro
 
   if (size === 'banner') {
     return (
-      <div className={className}>
-        {/* AdSense unit */}
-        <ins
+      <div ref={ref} className={className}>
+        {show && <ins
           className="adsbygoogle"
           style={{ display: 'block' }}
           data-ad-client="ca-pub-4237294630161176"
           data-ad-format="auto"
           data-full-width-responsive="true"
-        />
+        />}
         {/* Affiliate fallback strip */}
         <a
           href={aff.url}
@@ -83,14 +103,14 @@ export default function AdUnit({ size = 'rectangle', className = '' }: AdUnitPro
   }
 
   return (
-    <div className={className}>
-      <ins
+    <div ref={ref} className={className}>
+      {show && <ins
         className="adsbygoogle"
         style={{ display: 'block' }}
         data-ad-client="ca-pub-4237294630161176"
         data-ad-format="auto"
         data-full-width-responsive="true"
-      />
+      />}
       <a
         href={aff.url}
         target="_blank"
