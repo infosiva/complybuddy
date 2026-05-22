@@ -8,6 +8,7 @@ import AuthButton from '@/components/AuthButton'
 import AffiliateStrip from '@/components/AffiliateStrip'
 import type { BrandConfig } from '@/components/SharedNavbar'
 import CookieConsent from "../components/CookieConsent";
+import SchemaOrg from '@/components/SchemaOrg'
 
 const brand: BrandConfig = {
   name: 'ComplyScan',
@@ -20,12 +21,12 @@ const brand: BrandConfig = {
 }
 
 export const metadata: Metadata = {
-  title: 'ComplyScan — AI Compliance Checker',
-  description: 'Instantly scan social media posts, ads and website content for GDPR, FTC and copyright compliance issues. Free AI-powered compliance scanner.',
-  keywords: ['compliance scanner', 'GDPR compliance', 'FTC disclosure', 'social media compliance', 'copyright checker'],
+  title: 'ComplyBuddy — AI Compliance Scanner for GDPR, ADA & FTC',
+  description: 'Paste any content and AI instantly checks for GDPR, ADA, FTC, and legal compliance issues. Free compliance scanner — no sign-up required.',
+  keywords: ['compliance scanner', 'GDPR compliance', 'FTC disclosure', 'ADA compliance', 'CCPA checker', 'privacy policy scanner', 'cookie compliance'],
   metadataBase: new URL('https://complyscan.app'),
-  openGraph: { title: 'ComplyScan — AI Compliance Checker', description: 'Scan your content for legal compliance issues in seconds.', type: 'website', locale: 'en_GB', siteName: 'ComplyScan', url: 'https://complyscan.app', images: [{ url: '/og.png', width: 1200, height: 630 }] },
-  twitter: { card: 'summary_large_image', title: 'ComplyScan', description: 'AI compliance checker for GDPR, FTC and copyright.' },
+  openGraph: { title: 'ComplyBuddy — AI Compliance Scanner', description: 'Paste any content and AI instantly checks for GDPR, ADA, FTC, and legal issues. Free, no sign-up.', type: 'website', locale: 'en_US', siteName: 'ComplyBuddy', url: 'https://complyscan.app', images: [{ url: '/og.png', width: 1200, height: 630 }] },
+  twitter: { card: 'summary_large_image', title: 'ComplyBuddy — AI Compliance Scanner', description: 'GDPR, ADA, FTC compliance check in seconds. Free.' },
   robots: { index: true, follow: true },
 }
 
@@ -33,12 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org", "@type": "SoftwareApplication",
-          "name": "ComplyScan", "url": brand.url, "description": brand.tagline,
-          "applicationCategory": "BusinessApplication", "operatingSystem": "Web",
-          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "GBP" }
-        })}} />
+        <SchemaOrg />
       
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
