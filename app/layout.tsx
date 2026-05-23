@@ -9,6 +9,7 @@ import AffiliateStrip from '@/components/AffiliateStrip'
 import type { BrandConfig } from '@/components/SharedNavbar'
 import CookieConsent from "../components/CookieConsent";
 import SchemaOrg from '@/components/SchemaOrg'
+import BackToTop from '@/components/BackToTop'
 
 const brand: BrandConfig = {
   name: 'ComplyScan',
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AffiliateStrip />
         <Footer siteName="ComplyScan" />
         <script src="http://31.97.56.148:3098/t.js" data-site="complyscan.app" defer></script>
+      <BackToTop accentColor="#3b82f6" />
       <CookieConsent />
       </body>
     </html>
