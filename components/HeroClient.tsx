@@ -4,9 +4,10 @@ import { motion } from 'framer-motion'
 import { STAGGER_CONTAINER, FADE_UP, SPRING_CINEMATIC, BUTTON_PRESS, useMotionVariants } from '@/lib/motion'
 import { siteConfig } from '@/site.config'
 import { theme, btn } from '@/lib/theme'
+import { type ContentOverrides } from '@/lib/content'
 import Link from 'next/link'
 
-export default function HeroClient() {
+export default function HeroClient({ overrides = {} }: { overrides?: ContentOverrides }) {
   const variants  = useMotionVariants(STAGGER_CONTAINER(0.06))
   const childVars = useMotionVariants(FADE_UP)
 
@@ -30,14 +31,17 @@ export default function HeroClient() {
         variants={childVars as Parameters<typeof motion.h1>[0]['variants']}
         className="text-5xl sm:text-6xl font-black leading-[1.05] tracking-tight"
       >
-        {siteConfig.headline.map((line, i) => (
-          <span key={i} className="block">
-            {i === 1
-              ? <span className={theme.gradientText} style={{ filter: 'drop-shadow(0 0 24px rgba(99,102,241,0.45))' }}>{line}</span>
-              : <span className="text-white">{line}</span>
-            }
-          </span>
-        ))}
+        {overrides.headline
+          ? <span className="block"><span className={theme.gradientText} style={{ filter: 'drop-shadow(0 0 24px rgba(99,102,241,0.45))' }}>{overrides.headline}</span></span>
+          : siteConfig.headline.map((line, i) => (
+            <span key={i} className="block">
+              {i === 1
+                ? <span className={theme.gradientText} style={{ filter: 'drop-shadow(0 0 24px rgba(99,102,241,0.45))' }}>{line}</span>
+                : <span className="text-white">{line}</span>
+              }
+            </span>
+          ))
+        }
       </motion.h1>
 
       {/* Subheadline */}
@@ -45,7 +49,7 @@ export default function HeroClient() {
         variants={childVars as Parameters<typeof motion.p>[0]['variants']}
         className="text-white/55 text-base leading-relaxed max-w-lg"
       >
-        {siteConfig.subheadline}
+        {overrides.subheadline ?? siteConfig.subheadline}
       </motion.p>
 
       {/* Free tier pills */}
@@ -69,7 +73,7 @@ export default function HeroClient() {
             href={siteConfig.ctaPrimary.href}
             className="inline-flex items-center justify-center px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white text-base font-bold min-h-[52px] hover:opacity-90 transition-opacity cta-pulse"
           >
-            {siteConfig.ctaPrimary.text}
+            {overrides.cta ?? siteConfig.ctaPrimary.text}
           </Link>
         </motion.div>
         <motion.div {...BUTTON_PRESS} transition={SPRING_CINEMATIC}>
