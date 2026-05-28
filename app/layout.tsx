@@ -8,6 +8,7 @@ import AuthButton from '@/components/AuthButton'
 import AffiliateStrip from '@/components/AffiliateStrip'
 import type { BrandConfig } from '@/components/SharedNavbar'
 import CookieConsent from "../components/CookieConsent";
+import ChatBot from '@/components/ChatBot'
 import SchemaOrg from '@/components/SchemaOrg'
 import BackToTop from '@/components/BackToTop'
 
@@ -72,6 +73,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AffiliateStrip />
         <Footer siteName="ComplyScan" />
         <script src="http://31.97.56.148:3098/t.js" data-site="complyscan.app" defer></script>
+      <ChatBot />
       <BackToTop accentColor="#3b82f6" />
       <CookieConsent />
       </body>
