@@ -244,10 +244,10 @@ export default function GuidedTour({
 
         {/* Animated hero area */}
         {step.icon && (
-          <div style={{ position: 'relative', height: 90, overflow: 'hidden', background: `radial-gradient(ellipse at 50% 110%, ${accentColor}18 0%, transparent 70%)`, borderBottom: `1px solid ${accentColor}12`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ position: 'relative', height: 90, overflow: 'hidden', background: `linear-gradient(160deg, ${accentColor}28 0%, rgba(8,10,18,0.9) 60%, ${accentColor}14 100%)`, borderBottom: `1px solid ${accentColor}30`, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             {/* bg orbs */}
-            <div className="tour-orb1" style={{ position: 'absolute', width: 80, height: 80, borderRadius: '50%', background: `radial-gradient(circle, ${accentColor}20 0%, transparent 70%)`, top: -10, left: 20, filter: 'blur(20px)' }} />
-            <div className="tour-orb2" style={{ position: 'absolute', width: 60, height: 60, borderRadius: '50%', background: `radial-gradient(circle, ${accentColor}15 0%, transparent 70%)`, bottom: -10, right: 30, filter: 'blur(18px)' }} />
+            <div className="tour-orb1" style={{ position: 'absolute', width: 80, height: 80, borderRadius: '50%', background: `radial-gradient(circle, ${accentColor}55 0%, transparent 70%)`, top: -10, left: 20, filter: 'blur(20px)' }} />
+            <div className="tour-orb2" style={{ position: 'absolute', width: 60, height: 60, borderRadius: '50%', background: `radial-gradient(circle, ${accentColor}40 0%, transparent 70%)`, bottom: -10, right: 30, filter: 'blur(18px)' }} />
             {/* ping ring */}
             <div style={{ position: 'absolute', width: 64, height: 64, borderRadius: '50%', border: `2px solid ${accentColor}25`, animation: 'tour-ping 2s ease-out infinite' }} />
             {/* icon */}
