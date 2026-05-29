@@ -1,10 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, { apiVersion: '2026-04-22.dahlia' })
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
-
 const AUTH_API = process.env.NEXT_PUBLIC_AUTH_API_URL || 'http://31.97.56.148:3110'
+
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY
+  if (!key) throw new Error('STRIPE_SECRET_KEY not set')
+  return new Stripe(key, { apiVersion: '2026-04-22.dahlia' })
+}
 
 async function markUserPro(email: string, subscriptionId: string, status: 'pro' | 'free') {
   try {
@@ -19,6 +22,8 @@ async function markUserPro(email: string, subscriptionId: string, status: 'pro' 
 }
 
 export async function POST(req: NextRequest) {
+  const stripe = getStripe()
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
   const body = await req.text()
   const sig = req.headers.get('stripe-signature') || ''
 
