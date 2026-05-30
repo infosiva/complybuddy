@@ -136,6 +136,8 @@ export default function ScanTool() {
   const [expandedIssue, setExpandedIssue] = useState<number | null>(null);
   const [checkingOut, setCheckingOut] = useState(false);
   const [isPro, setIsPro] = useState(false);
+  const [fixingIssue, setFixingIssue] = useState<number | null>(null);
+  const [fixedClauses, setFixedClauses] = useState<Record<number, string>>({});
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -186,6 +188,7 @@ export default function ScanTool() {
     setResult(null);
     setError("");
     setExpandedIssue(null);
+    setFixedClauses({});
     try {
       const res = await fetch("/api/scan", {
         method: "POST",
@@ -200,6 +203,39 @@ export default function ScanTool() {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function handleFixClause(issueIndex: number, issue: Issue) {
+    if (fixingIssue === issueIndex) return;
+    setFixingIssue(issueIndex);
+    try {
+      const res = await fetch('/api/scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: `Rewrite this clause to be legally compliant with ${issue.law}. Original issue: ${issue.category}. Description: ${issue.description}. Existing fix guidance: ${issue.fix}. Respond ONLY with the rewritten clause text — no preamble, no explanation.`,
+          contentType: 'website copy',
+          mode: 'rewrite',
+        }),
+      });
+      const data = await res.json();
+      const rewritten: string = data.rewrite ?? data.summary ?? data.issues?.[0]?.fix ?? '';
+      if (rewritten) {
+        setFixedClauses(prev => ({ ...prev, [issueIndex]: rewritten }));
+      }
+    } catch {
+      // silently fail — user can retry
+    } finally {
+      setFixingIssue(null);
+    }
+  }
+
+  // Derive overall risk level from scan result
+  function getRiskLevel(r: ScanResult): 'HIGH' | 'MEDIUM' | 'LOW' {
+    const text = (r.summary + ' ' + r.issues.map(i => i.description + ' ' + i.category).join(' ')).toLowerCase();
+    if (r.issues.some(i => i.severity === 'high') || text.includes('high risk') || text.includes('breach') || text.includes('non-compliant') || r.overallScore < 50) return 'HIGH';
+    if (r.issues.some(i => i.severity === 'medium') || text.includes('moderate') || text.includes('medium') || r.overallScore < 80) return 'MEDIUM';
+    return 'LOW';
   }
 
   const vStyle = result ? verdictColor(result.verdict) : null;
@@ -357,6 +393,41 @@ export default function ScanTool() {
           transition={{ duration: 0.4 }}
           className="relative z-10 max-w-5xl mx-auto px-5 mt-5 mb-10 space-y-3"
         >
+          {/* ── RISK SEVERITY BAR ── */}
+          {(() => {
+            const risk = getRiskLevel(result);
+            const riskConfig = {
+              HIGH:   { color: '#f87171', bg: 'rgba(239,68,68,0.12)',   border: 'rgba(239,68,68,0.35)',   barBg: '#f87171', label: 'HIGH',   icon: '🔴', desc: 'Immediate attention required' },
+              MEDIUM: { color: '#fbbf24', bg: 'rgba(245,158,11,0.12)', border: 'rgba(245,158,11,0.35)', barBg: '#fbbf24', label: 'MEDIUM', icon: '🟡', desc: 'Review and update recommended' },
+              LOW:    { color: '#34d399', bg: 'rgba(16,185,129,0.12)', border: 'rgba(16,185,129,0.35)', barBg: '#34d399', label: 'LOW',    icon: '🟢', desc: 'Minor issues or fully compliant' },
+            }[risk];
+            return (
+              <div className="rounded-2xl p-4 flex items-center gap-4"
+                style={{ background: riskConfig.bg, border: `1px solid ${riskConfig.border}` }}>
+                <span style={{ fontSize: 22 }}>{riskConfig.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="text-[11px] font-bold tracking-[0.14em] uppercase font-mono" style={{ color: riskConfig.color }}>Risk Level</span>
+                    <span className="text-[11px] font-black tracking-[0.1em] px-2.5 py-0.5 rounded-full font-mono"
+                      style={{ background: riskConfig.bg, border: `1px solid ${riskConfig.border}`, color: riskConfig.color }}>
+                      {riskConfig.label}
+                    </span>
+                  </div>
+                  {/* Bar track */}
+                  <div className="w-full h-2.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+                    <div className="h-full rounded-full transition-all duration-700"
+                      style={{
+                        width: risk === 'HIGH' ? '90%' : risk === 'MEDIUM' ? '55%' : '20%',
+                        background: riskConfig.barBg,
+                        boxShadow: `0 0 8px ${riskConfig.barBg}`,
+                      }} />
+                  </div>
+                </div>
+                <p className="text-xs shrink-0 hidden sm:block" style={{ color: riskConfig.color, opacity: 0.75 }}>{riskConfig.desc}</p>
+              </div>
+            );
+          })()}
+
           {/* Report header */}
           <div className="rounded-2xl overflow-hidden"
             style={{ background: 'rgba(12,14,24,0.95)', border: `1px solid ${vStyle.border}`, boxShadow: `0 0 48px ${vStyle.bg}` }}>
@@ -434,6 +505,33 @@ export default function ScanTool() {
                           <div>
                             <p className="text-[10px] font-bold uppercase tracking-[0.1em] font-mono mb-1.5" style={{ color: '#475569' }}>Applicable regulation</p>
                             <p className="text-xs font-mono" style={{ color: '#a5b4fc' }}>{issue.law}</p>
+                          </div>
+                          {/* Fix this clause button */}
+                          <div>
+                            <button
+                              onClick={e => { e.stopPropagation(); handleFixClause(i, issue); }}
+                              disabled={fixingIssue === i}
+                              className="inline-flex items-center gap-1.5 text-[12px] font-bold px-3 py-1.5 rounded-lg transition-all btn-press disabled:opacity-50 disabled:cursor-wait"
+                              style={{ background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.35)', color: '#a5b4fc' }}>
+                              {fixingIssue === i ? (
+                                <>
+                                  <span className="inline-flex gap-0.5">
+                                    <span className="w-1 h-1 rounded-full bg-indigo-400 dot-1" />
+                                    <span className="w-1 h-1 rounded-full bg-indigo-400 dot-2" />
+                                    <span className="w-1 h-1 rounded-full bg-indigo-400 dot-3" />
+                                  </span>
+                                  Rewriting…
+                                </>
+                              ) : (
+                                <>✏️ Fix this clause</>
+                              )}
+                            </button>
+                            {fixedClauses[i] && (
+                              <div className="mt-2 rounded-lg p-3" style={{ background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.25)' }}>
+                                <p className="text-[10px] font-bold uppercase tracking-[0.1em] font-mono mb-1.5" style={{ color: '#34d399' }}>Rewritten clause</p>
+                                <p className="text-xs leading-relaxed" style={{ color: '#6ee7b7' }}>{fixedClauses[i]}</p>
+                              </div>
+                            )}
                           </div>
                         </div>
                       )}
