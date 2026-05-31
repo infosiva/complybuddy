@@ -62,6 +62,34 @@ export default function HeroClient({ overrides = {} }: { overrides?: ContentOver
         ))}
       </motion.div>
 
+      {/* Compliance frameworks strip */}
+      <motion.div
+        variants={childVars as Parameters<typeof motion.div>[0]['variants']}
+        className="flex flex-wrap justify-center gap-2 mt-1"
+      >
+        {[
+          { flag: '🇪🇺', label: 'GDPR', color: '#3b82f6' },
+          { flag: '🇺🇸', label: 'CCPA', color: '#8b5cf6' },
+          { flag: '♿', label: 'ADA/WCAG', color: '#06b6d4' },
+          { flag: '📣', label: 'FTC', color: '#f59e0b' },
+          { flag: '🏥', label: 'HIPAA', color: '#10b981' },
+          { flag: '🔒', label: 'ISO 27001', color: '#6366f1' },
+        ].map(fw => (
+          <span
+            key={fw.label}
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold"
+            style={{
+              background: `${fw.color}18`,
+              border: `1px solid ${fw.color}40`,
+              color: fw.color,
+            }}
+          >
+            <span>{fw.flag}</span>
+            {fw.label}
+          </span>
+        ))}
+      </motion.div>
+
       {/* CTAs */}
       <motion.div
         variants={childVars as Parameters<typeof motion.div>[0]['variants']}
