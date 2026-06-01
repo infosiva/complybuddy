@@ -31,14 +31,21 @@ export default function FeaturesGrid() {
               variants={itemVars as Parameters<typeof motion.div>[0]['variants']}
               {...CARD_HOVER}
               transition={SPRING_CINEMATIC}
-              className={`rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6 flex flex-col gap-3 cursor-default select-none
+              style={{
+            background: f.accent ? `linear-gradient(135deg, ${f.accent}0d 0%, rgba(255,255,255,0.02) 100%)` : undefined,
+            borderColor: f.accent ? `${f.accent}25` : undefined,
+          }}
+          className={`rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6 flex flex-col gap-3 cursor-default select-none
                 ${isLarge ? 'md:col-span-1 md:row-span-2' : ''}
                 ${isWide  ? 'sm:col-span-2 md:col-span-2' : ''}
               `}
             >
-              <span className={`${isLarge ? 'text-4xl' : 'text-3xl'}`}>{f.icon}</span>
+              <div className="flex items-center gap-3">
+                <span className={`${isLarge ? 'text-4xl' : 'text-2xl'}`}>{f.icon}</span>
+                {f.accent && <div className="h-px flex-1" style={{ background: `linear-gradient(to right, ${f.accent}40, transparent)` }} />}
+              </div>
               <div className={`font-bold text-white ${isLarge ? 'text-lg' : 'text-sm'}`}>{f.title}</div>
-              <div className={`text-white/45 leading-relaxed ${isLarge ? 'text-sm' : 'text-xs'}`}>{f.desc}</div>
+              <div className={`text-white/50 leading-relaxed ${isLarge ? 'text-sm' : 'text-xs'}`}>{f.desc}</div>
             </motion.div>
           )
         })}

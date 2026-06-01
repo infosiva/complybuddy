@@ -19,7 +19,7 @@ export interface SiteConfig {
     marqueeItems: string[]
   }
   howItWorks: Array<{ step: number; icon: string; title: string; desc: string }>
-  features: Array<{ icon: string; title: string; desc: string; size?: 'large' | 'wide' | 'medium' }>
+  features: Array<{ icon: string; title: string; desc: string; size?: 'large' | 'wide' | 'medium'; accent?: string }>
   faq: Array<{ q: string; a: string }>
   finalCta: { headline: string; subtext: string; ctaText: string; ctaHref: string }
   layout: { heroVariant: HeroVariant; sectionOrder: string[]; hideSections: string[] }
@@ -34,10 +34,10 @@ export const siteConfig: SiteConfig = {
   themeColor: 'indigo',
 
   heroBadge:    'complybuddy · AI compliance scanner · free to scan',
-  headline:     ['Compliance checked.', 'In seconds.'],
-  subheadline:  'Paste any policy, contract, or content — AI scans for GDPR, ADA, FTC, and legal issues instantly.',
-  ctaPrimary:   { text: '⚖️ Scan Free Now →', href: '#scan-input' },
-  ctaSecondary: { text: '📋 See how it works', href: '#how-it-works' },
+  headline:     ['Paste any clause.', 'Know your legal risk', 'in 60 seconds.'],
+  subheadline:  'AI scans contracts, policies, and terms — flags risks in plain English with instant fix suggestions. No lawyer needed.',
+  ctaPrimary:   { text: 'Scan My Content Free', href: '#scan-input' },
+  ctaSecondary: { text: 'See how it works', href: '#how-it-works' },
 
   freeTier: {
     pills: ['3 free scans', 'GDPR + ADA + FTC', 'No sign-up'],
@@ -67,12 +67,12 @@ export const siteConfig: SiteConfig = {
   ],
 
   features: [
-    { icon: '🇪🇺', title: 'GDPR Scanning',         desc: 'Detects data processing language, consent gaps, and right-to-erasure compliance issues.',            size: 'large'  },
-    { icon: '♿', title: 'ADA Compliance',           desc: 'Checks web content and policies for accessibility barriers against WCAG 2.1 AA standards.',          size: 'medium' },
-    { icon: '📣', title: 'FTC Advertising Rules',   desc: 'Flags undisclosed sponsorships, misleading claims, and endorsement policy violations.',               size: 'medium' },
-    { icon: '🔒', title: 'Privacy Policy Checker',  desc: 'Identifies missing clauses, vague language, and gaps in your privacy disclosures.',                   size: 'medium' },
-    { icon: '🍪', title: 'Cookie Compliance',        desc: 'Scans for missing consent banners and non-compliant cookie usage descriptions.',                      size: 'wide'   },
-    { icon: '⚡', title: 'Instant Fix Suggestions', desc: 'Every flagged issue comes with a plain-English recommendation you can action immediately.',            size: 'medium' },
+    { icon: '🇪🇺', title: 'GDPR Scanning',         desc: 'Detects consent gaps, missing data-processing statements, and right-to-erasure issues. References exact GDPR articles.',  size: 'large', accent: '#3b82f6'  },
+    { icon: '♿', title: 'ADA / WCAG 2.1',          desc: 'Flags accessibility barriers in web content and policy text against WCAG 2.1 AA standards.',          size: 'medium', accent: '#06b6d4' },
+    { icon: '📣', title: 'FTC Ad Rules',            desc: 'Catches undisclosed sponsorships, misleading claims, and endorsement policy violations before regulators do.', size: 'medium', accent: '#f59e0b' },
+    { icon: '🔒', title: 'Privacy Policy AI',       desc: 'Identifies vague language, missing required clauses, and jurisdiction-specific gaps in your privacy disclosures.', size: 'medium', accent: '#8b5cf6' },
+    { icon: '🍪', title: 'Cookie Compliance',       desc: 'Scans for missing consent banners, improper cookie classifications, and third-party tracking disclosures.', size: 'wide', accent: '#10b981' },
+    { icon: '⚡', title: 'Instant Fix Suggestions', desc: 'Every flagged issue includes the exact regulation clause, severity rating, and a plain-English fix you can copy.',  size: 'medium', accent: '#f43f5e' },
   ],
 
   faq: [
@@ -116,9 +116,9 @@ export const siteConfig: SiteConfig = {
   ],
 
   chatbot: {
-    welcomeMessage: 'Hi! Ask me about GDPR, ADA, FTC, or cookie compliance.',
+    welcomeMessage: "I'm ComplyBot. Paste any content and I'll tell you exactly what compliance issues it has — GDPR, FTC, ADA, or cookie law. What would you like me to check?",
     botName:        'ComplyBot',
-    placeholder:    'Ask about compliance…',
+    placeholder:    'Paste content or ask about a compliance rule…',
   },
 }
 
