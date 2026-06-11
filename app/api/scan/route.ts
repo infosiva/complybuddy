@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { AI_LIMITER } from '@/lib/rateLimit'
 
 const TIMEOUT_MS = 40_000;
 
@@ -152,6 +153,8 @@ function parseResult(text: string): ScanResult {
 }
 
 export async function POST(req: NextRequest) {
+  const limited = AI_LIMITER.check(req)
+  if (limited) return limited
   try {
     const { content, contentType = "social media post" } = await req.json();
     if (!content?.trim()) {

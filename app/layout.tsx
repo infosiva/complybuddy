@@ -7,16 +7,19 @@ import DesignEffects from '@/components/DesignEffects'
 import AuthButton from '@/components/AuthButton'
 import AffiliateStrip from '@/components/AffiliateStrip'
 import type { BrandConfig } from '@/components/SharedNavbar'
-import CookieConsent from "../components/CookieConsent";
+import CookieConsent from "../components/CookieConsent"
 import ChatBot from '@/components/ChatBot'
 import SchemaOrg from '@/components/SchemaOrg'
 import BackToTop from '@/components/BackToTop'
+import FloatingChatWrapper from '@/components/FloatingChatWrapper'
+import FeedbackWidget from '@/components/FeedbackWidget'
+import { loadSiteTheme, buildThemeStyleTag, isWidgetHidden } from '@/lib/theme-loader'
 
 const brand: BrandConfig = {
-  name: 'ComplyScan',
+  name: 'ComplyBuddy',
   tagline: 'AI compliance checker — GDPR, FTC, copyright issues caught before they cost you.',
-  icon: '🛡️',
-  color: '#3b82f6',
+  icon: '⚖️',
+  color: '#0284c7',
   url: 'https://complyscan.app',
   navLinks: [{ label: 'Scan content', href: '/' }],
   cta: { label: 'Scan free →', href: '/' },
@@ -32,50 +35,56 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const theme = await loadSiteTheme('complybuddy')
+
+  const themeCSS = buildThemeStyleTag(theme, {
+    background: '#f0f9ff',
+    primary: '#0284c7',
+    secondary: '#0369a1',
+  })
+
   return (
     <html lang="en">
       <head>
         <SchemaOrg />
-      
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
         <style dangerouslySetInnerHTML={{ __html: `
           :root {
-            --theme-primary: #2563eb;
-            --theme-secondary: #1d4ed8;
-            --theme-base: #020b1a;
-            --background: #020b1a;
-            --surface-1: #071428;
-            --surface-2: #0d2040;
-            --foreground: #f8fafc;
-            --text-2: #93c5fd;
-            --border-default: rgba(37,99,235,0.15);
-            --border-strong: rgba(37,99,235,0.3);
+            --theme-primary: #0284c7;
+            --theme-secondary: #0369a1;
+            --theme-base: #f0f9ff;
+            --background: #f0f9ff;
+            --surface-1: #e0f2fe;
+            --surface-2: #bae6fd;
+            --foreground: #0c4a6e;
+            --text-2: #0284c7;
+            --border-default: rgba(2,132,199,0.15);
+            --border-strong: rgba(2,132,199,0.3);
             --radius: 0.375rem;
             --radius-lg: 0.5rem;
           }
+          html, body { background: #f0f9ff !important; color: #0c4a6e !important; }
           body { font-family: 'IBM Plex Sans', system-ui, sans-serif !important; }
           h1, h2, h3 { font-weight: 600 !important; letter-spacing: -0.01em; }
-          .glass { background: rgba(2,11,26,0.75) !important; border-color: rgba(37,99,235,0.12) !important; }
+          ${themeCSS}
         ` }} />
       </head>
       <body className="flex flex-col min-h-screen">
-        <div className="aurora aurora-primary" aria-hidden />
-        <div className="aurora aurora-secondary" aria-hidden />
-        <div className="aurora aurora-third" aria-hidden />
-        <div className="grain" aria-hidden />
         <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4237294630161176" crossOrigin="anonymous" strategy="lazyOnload" />
         <DesignEffects />
         <SharedNavbar brand={brand} authSlot={<AuthButton />} />
         <main className="flex-1 pt-16">{children}</main>
         <AffiliateStrip />
-        <Footer siteName="ComplyScan" />
-        <script src="http://31.97.56.148:3098/t.js" data-site="complyscan.app" defer></script>
-      <ChatBot />
-      <BackToTop accentColor="#3b82f6" />
-      <CookieConsent />
+        <Footer siteName="ComplyBuddy" />
+        <Script defer data-site="complyscan.app" src="http://31.97.56.148:3098/t.js" strategy="afterInteractive" />
+        {!isWidgetHidden(theme, 'chatbot') && <ChatBot />}
+        {!isWidgetHidden(theme, 'backToTop') && <BackToTop accentColor="#0284c7" />}
+        {!isWidgetHidden(theme, 'cookieConsent') && <CookieConsent />}
+        <FloatingChatWrapper />
+        <FeedbackWidget siteName="ComplyBuddy" accentColor="#0284c7" accentColor2="#0369a1" position="left" />
       </body>
     </html>
   )
