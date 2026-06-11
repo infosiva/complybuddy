@@ -1,22 +1,22 @@
-// lib/theme.ts — complybuddy indigo/violet theme tokens
+// lib/theme.ts — complybuddy sky-blue theme tokens
 // All accent class strings derived here so components stay theme-agnostic.
 
 export const theme = {
   // Badge / pill backgrounds
-  badge: 'bg-indigo-500/10 border border-indigo-500/25 text-indigo-300',
+  badge: 'bg-sky-500/10 border border-sky-500/25 text-sky-700',
 
   // Gradient text for accent headline words
-  gradientText: 'bg-gradient-to-r from-indigo-400 via-violet-400 to-indigo-300 bg-clip-text text-transparent',
+  gradientText: 'bg-gradient-to-r from-sky-600 via-sky-500 to-cyan-500 bg-clip-text text-transparent',
 
   // Gradient for buttons / badges
-  gradient: 'from-indigo-600 to-violet-600',
+  gradient: 'from-sky-600 to-sky-700',
 
   // Accent text
-  textAccent: 'text-indigo-400',
+  textAccent: 'text-sky-600',
 }
 
 export const btn = {
-  secondary: 'rounded-xl border border-white/20 text-white/70 hover:border-white/40 hover:text-white transition-all inline-flex',
+  secondary: 'rounded-xl border border-sky-200 text-sky-600 hover:border-sky-400 hover:text-sky-800 transition-all inline-flex',
 }
 
 export default theme

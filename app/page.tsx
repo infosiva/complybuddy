@@ -1,17 +1,22 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 
 const ease = [0.23, 1, 0.32, 1] as const
 
 const PILLS = ['GDPR', 'Terms of Service', 'NDA', 'Privacy Policy', 'Employment', 'Contract']
 
-const SAMPLE_CLAUSES = [
-  { text: 'Provider may share your data with third parties without notice.', risk: 'high', label: 'Data sharing' },
-  { text: 'All disputes shall be resolved by binding arbitration.', risk: 'medium', label: 'Arbitration' },
-  { text: 'Service may be terminated at any time without refund.', risk: 'high', label: 'Termination' },
+const CHECKLIST_ITEMS = [
+  { label: 'GDPR Article 13 — data collection notice', pass: true },
+  { label: 'FTC disclosure — material connection', pass: false },
+  { label: 'Copyright attribution present', pass: true },
+  { label: 'Arbitration clause identified', pass: false },
+  { label: 'Data retention period stated', pass: true },
+  { label: 'ADA-compliant language', pass: true },
+  { label: 'Third-party sharing disclosed', pass: false },
+  { label: 'Opt-out mechanism present', pass: true },
 ]
 
 const STEPS = [
@@ -23,36 +28,79 @@ const STEPS = [
 const FREE_FEATURES = ['10 scans / month', 'GDPR + FTC + copyright', 'Risk score + highlights', 'Plain-English summary']
 const PRO_FEATURES = ['Unlimited scans', 'All compliance types', 'Export PDF report', 'Priority support', 'Team access']
 
+type ScanResult = {
+  overallScore: number
+  verdict: string
+  summary: string
+  issues: Array<{ severity: 'high' | 'medium' | 'low'; category: string; description: string; fix: string; law: string }>
+  positives: string[]
+  checkedFor: string[]
+} | null
+
 export default function HomePage() {
   const [activeType, setActiveType] = useState('GDPR')
   const [text, setText] = useState('')
+  const [scanning, setScanning] = useState(false)
+  const [result, setResult] = useState<ScanResult>(null)
+  const [error, setError] = useState('')
+  const [checkedCount, setCheckedCount] = useState(0)
+  const prefersReduced = useReducedMotion()
+
+  // Animate compliance checklist items ticking in
+  useEffect(() => {
+    if (result) return // once user has real result, keep it
+    const interval = setInterval(() => {
+      setCheckedCount(n => {
+        if (n >= CHECKLIST_ITEMS.length) {
+          clearInterval(interval)
+          return n
+        }
+        return n + 1
+      })
+    }, prefersReduced ? 0 : 400)
+    return () => clearInterval(interval)
+  }, [result, prefersReduced])
+
+  // Reset animation loop
+  useEffect(() => {
+    if (result) return
+    if (checkedCount >= CHECKLIST_ITEMS.length) {
+      const t = setTimeout(() => setCheckedCount(0), prefersReduced ? 0 : 1200)
+      return () => clearTimeout(t)
+    }
+  }, [checkedCount, result, prefersReduced])
+
+  const handleScan = useCallback(async () => {
+    if (text.trim().length < 10) return
+    setScanning(true)
+    setError('')
+    setResult(null)
+    try {
+      const res = await fetch('/api/scan', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: text, contentType: activeType }),
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const data = await res.json()
+      setResult(data)
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : 'Unknown error'
+      setError(`Scan failed: ${msg}. Try again.`)
+    } finally {
+      setScanning(false)
+    }
+  }, [text, activeType])
 
   return (
     <div className="min-h-screen text-sky-900" style={{ background: '#f0f9ff' }}>
 
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 flex h-[52px] items-center justify-between border-b border-sky-200/60 px-5 backdrop-blur-xl" style={{ background: 'rgba(240,249,255,0.9)' }}>
-        <span className="text-[16px] font-black tracking-tight text-sky-900">
-          Comply<span className="text-sky-600">Buddy</span>
-        </span>
-        <div className="flex items-center gap-3">
-          <Link href="/login" className="hidden text-[12px] text-sky-500 hover:text-sky-700 sm:block transition-colors">Log in</Link>
-          <Link
-            href="/#scan"
-            className="rounded-lg px-3.5 py-1.5 text-[12px] font-bold text-white transition-all duration-150 hover:opacity-90 active:scale-[0.97]"
-            style={{ background: '#0284c7' }}
-          >
-            Scan free →
-          </Link>
-        </div>
-      </nav>
-
       {/* HERO */}
-      <section className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-5 pt-14 pb-10 lg:grid-cols-2 lg:gap-12 lg:pt-16">
+      <section className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-5 pt-8 pb-10 lg:grid-cols-2 lg:gap-12 lg:pt-10">
         {/* Left */}
         <motion.div
           className="flex flex-col justify-center"
-          initial={{ opacity: 0, y: 16 }}
+          initial={prefersReduced ? false : { opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease }}
         >
@@ -79,65 +127,141 @@ export default function HomePage() {
             />
             <div className="mt-3 flex items-center justify-between">
               <span className="text-[11px] text-sky-400">{text.length} chars</span>
-              <Link
-                href={text.length > 10 ? `/scan?q=${encodeURIComponent(text)}` : '/#scan'}
-                className="rounded-lg px-5 py-2 text-[13px] font-bold text-white transition-all duration-150 hover:opacity-90 active:scale-[0.97]"
+              <button
+                onClick={handleScan}
+                disabled={scanning || text.trim().length < 10}
+                className="rounded-lg px-5 py-2 text-[13px] font-bold text-white transition-all duration-150 hover:opacity-90 active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed"
                 style={{ background: '#0284c7' }}
               >
-                Scan now →
-              </Link>
+                {scanning ? 'Scanning…' : 'Scan now →'}
+              </button>
             </div>
+            {error && <p className="mt-2 text-[11px] text-red-500">{error}</p>}
           </div>
           <p className="mt-2 text-[11px] text-sky-400">Free — 10 scans/month, no credit card</p>
         </motion.div>
 
-        {/* Right — animated demo panel */}
+        {/* Right — animated compliance checklist / scan result */}
         <motion.div
           className="flex items-center justify-center lg:justify-end"
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={prefersReduced ? false : { opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4, ease, delay: 0.1 }}
         >
-          <div className="w-full max-w-[380px] rounded-2xl border border-sky-200 p-5 shadow-sm" style={{ background: '#fff' }}>
-            <div className="mb-3 flex items-center justify-between">
-              <span className="text-[12px] font-bold text-sky-500">Risk Analysis</span>
-              <span className="rounded-full px-2.5 py-0.5 text-[10px] font-black" style={{ background: 'rgba(239,68,68,0.1)', color: '#dc2626' }}>HIGH RISK</span>
-            </div>
-            {/* Score bar */}
-            <div className="mb-4">
-              <div className="mb-1 flex justify-between text-[10px] text-sky-400">
-                <span>Compliance score</span><span className="font-bold text-red-500">42 / 100</span>
-              </div>
-              <div className="h-2 rounded-full" style={{ background: '#e0f2fe' }}>
-                <div className="h-2 rounded-full" style={{ width: '42%', background: 'linear-gradient(to right,#f97316,#ef4444)' }} />
-              </div>
-            </div>
-            {/* Flagged clauses */}
-            <div className="space-y-2">
-              {SAMPLE_CLAUSES.map(c => (
-                <div
-                  key={c.text}
-                  className="rounded-lg border px-3 py-2"
-                  style={{
-                    borderColor: c.risk === 'high' ? 'rgba(239,68,68,0.2)' : 'rgba(234,179,8,0.2)',
-                    background: c.risk === 'high' ? 'rgba(239,68,68,0.06)' : 'rgba(234,179,8,0.06)',
-                  }}
+          {result ? (
+            /* Real scan result */
+            <div className="w-full max-w-[380px] rounded-2xl border border-sky-200 p-5 shadow-sm" style={{ background: '#fff' }}>
+              <div className="mb-3 flex items-center justify-between">
+                <span className="text-[12px] font-bold text-sky-500">Scan Result</span>
+                <span
+                  className="rounded-full px-2.5 py-0.5 text-[10px] font-black"
+                  style={result.overallScore >= 70
+                    ? { background: 'rgba(16,185,129,0.1)', color: '#059669' }
+                    : result.overallScore >= 40
+                    ? { background: 'rgba(234,179,8,0.1)', color: '#b45309' }
+                    : { background: 'rgba(239,68,68,0.1)', color: '#dc2626' }}
                 >
-                  <div className="mb-0.5 flex items-center gap-1.5">
-                    <span className="text-[9px] font-black uppercase" style={{ color: c.risk === 'high' ? '#dc2626' : '#b45309' }}>
-                      {c.risk === 'high' ? 'High Risk' : 'Review'}
-                    </span>
-                    <span className="text-[9px] text-sky-400">· {c.label}</span>
-                  </div>
-                  <p className="text-[11px] leading-snug text-sky-700">{c.text}</p>
+                  {result.overallScore >= 70 ? 'LOW RISK' : result.overallScore >= 40 ? 'MEDIUM RISK' : 'HIGH RISK'}
+                </span>
+              </div>
+              <div className="mb-4">
+                <div className="mb-1 flex justify-between text-[10px] text-sky-400">
+                  <span>Compliance score</span>
+                  <span className="font-bold" style={{ color: result.overallScore >= 70 ? '#059669' : result.overallScore >= 40 ? '#b45309' : '#dc2626' }}>
+                    {result.overallScore} / 100
+                  </span>
                 </div>
-              ))}
+                <div className="h-2 rounded-full" style={{ background: '#e0f2fe' }}>
+                  <div
+                    className="h-2 rounded-full transition-all duration-500"
+                    style={{
+                      width: `${result.overallScore}%`,
+                      background: result.overallScore >= 70 ? '#10b981' : result.overallScore >= 40 ? 'linear-gradient(to right,#f97316,#eab308)' : 'linear-gradient(to right,#f97316,#ef4444)',
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="space-y-2 max-h-36 overflow-y-auto">
+                {result.issues.map((issue, i) => (
+                  <div
+                    key={i}
+                    className="rounded-lg border px-3 py-2"
+                    style={{
+                      borderColor: issue.severity === 'high' ? 'rgba(239,68,68,0.2)' : issue.severity === 'medium' ? 'rgba(234,179,8,0.2)' : 'rgba(16,185,129,0.2)',
+                      background: issue.severity === 'high' ? 'rgba(239,68,68,0.06)' : issue.severity === 'medium' ? 'rgba(234,179,8,0.06)' : 'rgba(16,185,129,0.06)',
+                    }}
+                  >
+                    <div className="mb-0.5 flex items-center gap-1.5">
+                      <span className="text-[9px] font-black uppercase" style={{ color: issue.severity === 'high' ? '#dc2626' : issue.severity === 'medium' ? '#b45309' : '#059669' }}>
+                        {issue.severity}
+                      </span>
+                      <span className="text-[9px] text-sky-400">· {issue.category}</span>
+                    </div>
+                    <p className="text-[11px] leading-snug text-sky-700">{issue.description}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-3 rounded-lg border border-sky-100 p-3 text-[11px] leading-relaxed text-sky-600" style={{ background: '#f0f9ff' }}>
+                <span className="font-bold text-sky-800">Summary: </span>
+                {result.summary}
+              </div>
+              <button
+                onClick={() => { setResult(null); setCheckedCount(0) }}
+                className="mt-3 w-full rounded-lg border border-sky-200 py-1.5 text-[11px] text-sky-500 hover:border-sky-400 hover:text-sky-700 transition-all duration-150 active:scale-[0.97]"
+              >
+                New scan
+              </button>
             </div>
-            <div className="mt-3 rounded-lg border border-sky-100 p-3 text-[11px] leading-relaxed text-sky-600" style={{ background: '#f0f9ff' }}>
-              <span className="font-bold text-sky-800">Summary: </span>
-              This content has 2 high-risk compliance issues. Data sharing without notice and arbitration clauses may violate GDPR Article 13 and FTC guidelines.
+          ) : (
+            /* Animated compliance checklist demo */
+            <div className="w-full max-w-[380px] rounded-2xl border border-sky-200 p-5 shadow-sm" style={{ background: '#fff' }}>
+              <div className="mb-4 flex items-center justify-between">
+                <span className="text-[12px] font-bold text-sky-500">Compliance Checklist</span>
+                <span className="rounded-full border border-sky-200 px-2.5 py-0.5 text-[10px] text-sky-400">
+                  Live scan
+                </span>
+              </div>
+              <div className="space-y-2.5">
+                {CHECKLIST_ITEMS.map((item, i) => {
+                  const visible = i < checkedCount
+                  return (
+                    <motion.div
+                      key={item.label}
+                      initial={prefersReduced ? false : { opacity: 0, x: -8 }}
+                      animate={visible ? { opacity: 1, x: 0 } : { opacity: 0.2, x: 0 }}
+                      transition={{ duration: 0.25, ease }}
+                      className="flex items-start gap-3"
+                    >
+                      <span
+                        className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded text-[9px] font-black transition-all duration-300"
+                        style={visible
+                          ? item.pass
+                            ? { background: 'rgba(16,185,129,0.12)', color: '#059669', border: '1px solid rgba(16,185,129,0.3)' }
+                            : { background: 'rgba(239,68,68,0.1)', color: '#dc2626', border: '1px solid rgba(239,68,68,0.25)' }
+                          : { background: '#f0f9ff', border: '1px solid rgba(2,132,199,0.15)', color: 'transparent' }}
+                      >
+                        {visible ? (item.pass ? '✓' : '✗') : ''}
+                      </span>
+                      <span className={`text-[12px] leading-snug transition-colors duration-300 ${visible ? 'text-sky-800' : 'text-sky-300'}`}>
+                        {item.label}
+                      </span>
+                    </motion.div>
+                  )
+                })}
+              </div>
+              <div className="mt-4 h-1 rounded-full" style={{ background: '#e0f2fe' }}>
+                <motion.div
+                  className="h-1 rounded-full"
+                  style={{ background: '#0284c7' }}
+                  animate={{ width: `${(checkedCount / CHECKLIST_ITEMS.length) * 100}%` }}
+                  transition={{ duration: 0.3, ease }}
+                />
+              </div>
+              <p className="mt-2 text-[10px] text-sky-400 text-right">
+                {checkedCount} / {CHECKLIST_ITEMS.length} checks
+              </p>
             </div>
-          </div>
+          )}
         </motion.div>
       </section>
 
@@ -149,7 +273,7 @@ export default function HomePage() {
             <button
               key={p}
               onClick={() => setActiveType(p)}
-              className="shrink-0 rounded-full px-3.5 py-1 text-[12px] font-semibold transition-all duration-150"
+              className="shrink-0 rounded-full px-3.5 py-1 text-[12px] font-semibold transition-all duration-150 active:scale-[0.97]"
               style={
                 activeType === p
                   ? { background: '#0284c7', color: '#fff' }
@@ -169,7 +293,7 @@ export default function HomePage() {
           {STEPS.map((s) => (
             <motion.div
               key={s.n}
-              initial={{ opacity: 0, y: 12 }}
+              initial={prefersReduced ? false : { opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, ease }}
@@ -205,12 +329,12 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <Link
-              href="/#scan"
+            <a
+              href="#scan"
               className="mt-5 block rounded-xl border border-sky-200 py-2.5 text-center text-[13px] font-bold text-sky-600 transition-all duration-150 hover:border-sky-400 hover:text-sky-800 active:scale-[0.97]"
             >
               Start free →
-            </Link>
+            </a>
           </div>
           {/* Pro */}
           <div className="relative rounded-2xl p-6 text-white" style={{ background: 'linear-gradient(135deg, #0284c7, #0369a1)' }}>
