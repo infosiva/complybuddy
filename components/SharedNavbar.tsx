@@ -34,8 +34,8 @@ export default function SharedNavbar({ brand, authSlot }: { brand: BrandConfig; 
         style={{ '--accent': brand.color } as React.CSSProperties}
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out
           ${scrolled
-            ? 'bg-[#030305]/80 backdrop-blur-2xl border-b border-white/[0.05]'
-            : 'bg-transparent'
+            ? 'bg-white/90 backdrop-blur-2xl border-b border-sky-200/70 shadow-sm'
+            : 'bg-white/70 backdrop-blur-xl border-b border-sky-200/40'
           }`}
       >
         <div className="max-w-5xl mx-auto px-5 sm:px-8 h-14 flex items-center justify-between">
@@ -47,7 +47,7 @@ export default function SharedNavbar({ brand, authSlot }: { brand: BrandConfig; 
             >
               {brand.icon}
             </span>
-            <span className="font-semibold text-white/90 text-sm tracking-tight">
+            <span className="font-semibold text-sky-900 text-sm tracking-tight">
               {brand.name}
             </span>
           </Link>
@@ -61,7 +61,7 @@ export default function SharedNavbar({ brand, authSlot }: { brand: BrandConfig; 
                   href={l.href}
                   target={l.external ? '_blank' : undefined}
                   rel={l.external ? 'noopener noreferrer' : undefined}
-                  className="px-3 py-1.5 text-[13px] text-white/45 hover:text-white/90 rounded-md hover:bg-white/[0.04] transition-all duration-150"
+                  className="px-3 py-1.5 text-[13px] text-sky-600 hover:text-sky-900 rounded-md hover:bg-sky-100/60 transition-all duration-150"
                 >
                   {l.label}
                 </Link>
@@ -88,7 +88,7 @@ export default function SharedNavbar({ brand, authSlot }: { brand: BrandConfig; 
           {/* Mobile toggle */}
           <button
             onClick={() => setOpen(v => !v)}
-            className="md:hidden flex flex-col gap-1.5 p-2 rounded-md text-white/50 hover:text-white/80 transition-colors"
+            className="md:hidden flex flex-col gap-1.5 p-2 rounded-md text-sky-500 hover:text-sky-800 transition-colors"
             aria-label={open ? 'Close menu' : 'Open menu'}
           >
             <span className={`block w-5 h-px bg-current transition-all duration-200 origin-center ${open ? 'translate-y-[7px] rotate-45' : ''}`} />
@@ -109,14 +109,14 @@ export default function SharedNavbar({ brand, authSlot }: { brand: BrandConfig; 
         />
         {/* Drawer */}
         <div
-          className={`absolute top-0 left-0 right-0 bg-[#030305]/98 backdrop-blur-2xl border-b border-white/[0.06] transition-all duration-300 ease-out ${open ? 'translate-y-0' : '-translate-y-full'}`}
+          className={`absolute top-0 left-0 right-0 bg-white/98 backdrop-blur-2xl border-b border-sky-200 transition-all duration-300 ease-out ${open ? 'translate-y-0' : '-translate-y-full'}`}
         >
-          <div className="px-5 pt-5 pb-4 flex items-center justify-between border-b border-white/[0.05]">
+          <div className="px-5 pt-5 pb-4 flex items-center justify-between border-b border-sky-100">
             <Link href="/" onClick={() => setOpen(false)} className="flex items-center gap-2">
               <span className="text-lg">{brand.icon}</span>
-              <span className="font-semibold text-white/90 text-sm">{brand.name}</span>
+              <span className="font-semibold text-sky-900 text-sm">{brand.name}</span>
             </Link>
-            <button onClick={() => setOpen(false)} className="p-1.5 text-white/40 hover:text-white/80 transition-colors">
+            <button onClick={() => setOpen(false)} className="p-1.5 text-sky-400 hover:text-sky-700 transition-colors">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
           </div>
@@ -126,12 +126,12 @@ export default function SharedNavbar({ brand, authSlot }: { brand: BrandConfig; 
                 key={l.href}
                 href={l.href}
                 onClick={() => setOpen(false)}
-                className="px-2 py-2.5 text-sm text-white/60 hover:text-white rounded-lg hover:bg-white/[0.04] transition-all"
+                className="px-2 py-2.5 text-sm text-sky-600 hover:text-sky-900 rounded-lg hover:bg-sky-50 transition-all"
               >
                 {l.label}
               </Link>
             ))}
-            <div className="h-px bg-white/[0.05] my-2" />
+            <div className="h-px bg-sky-100 my-2" />
             <Link
               href={cta.href}
               onClick={() => setOpen(false)}

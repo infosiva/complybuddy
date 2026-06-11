@@ -5,7 +5,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 // ComplianceBot — blue theme, bottom-right, compliance assistant
 const ACCENT = '#3b82f6'
 const BOT_NAME = 'ComplianceBot'
-const WELCOME = '🛡️ Hi! I\'m ComplianceBot — your AI compliance guide. Ask me about GDPR, FTC disclosures, copyright rules, or what any compliance issue means for your content.'
+const WELCOME = "I'm ComplianceBot. Paste any content and I'll tell you exactly what compliance issues it has — GDPR, FTC, ADA, or cookie law. What would you like me to check?"
 const SYSTEM_PROMPT = `You are ComplianceBot, the AI assistant for ComplyScan — an AI-powered compliance checker for GDPR, FTC, and copyright issues.
 Help users understand compliance requirements, explain what issues were found in their scans, and give actionable guidance to fix problems.
 Be precise, professional, and clear. Always clarify you're providing guidance, not legal advice.
@@ -99,6 +99,8 @@ export default function ChatBot() {
         }}
         onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.08)')}
         onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
+        onMouseDown={e => (e.currentTarget.style.transform = 'scale(0.97)')}
+        onMouseUp={e => (e.currentTarget.style.transform = 'scale(1.08)')}
       >
         {open ? (
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round">
@@ -123,8 +125,8 @@ export default function ChatBot() {
         }}>
           <style>{`
             @keyframes comply-slide-up {
-              from { opacity: 0; transform: translateY(16px); }
-              to   { opacity: 1; transform: translateY(0); }
+              from { opacity: 0; transform: translateY(12px) scale(0.97); }
+              to   { opacity: 1; transform: translateY(0) scale(1); }
             }
             .comply-msg::-webkit-scrollbar { width: 4px; }
             .comply-msg::-webkit-scrollbar-track { background: transparent; }
