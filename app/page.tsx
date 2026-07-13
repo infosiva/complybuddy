@@ -93,7 +93,7 @@ export default function HomePage() {
   }, [text, activeType])
 
   return (
-    <div className="min-h-screen text-sky-900" style={{ background: '#f0f9ff' }}>
+    <div className="min-h-screen text-blue-900" style={{ background: '#ffffff' }}>
 
       {/* HERO */}
       <section className="mx-auto grid max-w-6xl grid-cols-1 gap-8 px-5 pt-8 pb-10 lg:grid-cols-2 lg:gap-12 lg:pt-10">
@@ -104,41 +104,41 @@ export default function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease }}
         >
-          <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-sky-300/60 px-3 py-1" style={{ background: 'rgba(2,132,199,0.08)' }}>
-            <span className="h-1.5 w-1.5 rounded-full" style={{ background: '#0284c7' }} />
-            <span className="text-[11px] font-semibold" style={{ color: '#0284c7' }}>AI-powered compliance scanner</span>
+          <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-blue-300/60 px-3 py-1" style={{ background: 'rgba(37,99,235,0.08)' }}>
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: '#2563eb' }} />
+            <span className="text-[11px] font-semibold" style={{ color: '#2563eb' }}>AI-powered compliance scanner</span>
           </div>
-          <h1 className="mb-3 font-black leading-[1.05] tracking-tight text-sky-900" style={{ fontSize: 'clamp(28px,4.5vw,48px)' }}>
+          <h1 className="mb-3 font-black leading-[1.05] tracking-tight text-blue-900" style={{ fontSize: 'clamp(28px,4.5vw,48px)' }}>
             Paste any content.<br />
-            <span style={{ color: '#0284c7' }}>Know your compliance risk</span><br />
+            <span style={{ color: '#2563eb' }}>Know your compliance risk</span><br />
             in 60 seconds.
           </h1>
-          <p className="mb-6 text-[14px] leading-relaxed text-sky-700/70">
+          <p className="mb-6 text-[14px] leading-relaxed text-blue-700/70">
             GDPR, FTC disclosures, copyright, ADA — paste any text and get an instant compliance check in plain English. Free, no sign-up.
           </p>
 
           {/* Scan input */}
-          <div id="scan" className="rounded-xl border border-sky-200 p-4 shadow-sm" style={{ background: '#fff' }}>
+          <div id="scan" className="rounded-xl border border-blue-200 p-4 shadow-sm" style={{ background: '#fff' }}>
             <textarea
               value={text}
               onChange={e => setText(e.target.value)}
               placeholder="Paste any content here… ads, social posts, email copy, terms, privacy policies…"
-              className="h-28 w-full resize-none bg-transparent text-[13px] text-sky-800 placeholder-sky-400/60 outline-none"
+              className="h-28 w-full resize-none bg-transparent text-[13px] text-blue-800 placeholder-blue-400/60 outline-none"
             />
             <div className="mt-3 flex items-center justify-between">
-              <span className="text-[11px] text-sky-400">{text.length} chars</span>
+              <span className="text-[11px] text-blue-400">{text.length} chars</span>
               <button
                 onClick={handleScan}
                 disabled={scanning || text.trim().length < 10}
                 className="rounded-lg px-5 py-2 text-[13px] font-bold text-white transition-all duration-150 hover:opacity-90 active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{ background: '#0284c7' }}
+                style={{ background: '#2563eb' }}
               >
                 {scanning ? 'Scanning…' : 'Scan now →'}
               </button>
             </div>
             {error && <p className="mt-2 text-[11px] text-red-500">{error}</p>}
           </div>
-          <p className="mt-2 text-[11px] text-sky-400">Free — 10 scans/month, no credit card</p>
+          <p className="mt-2 text-[11px] text-blue-400">Free — 10 scans/month, no credit card</p>
         </motion.div>
 
         {/* Right — animated compliance checklist / scan result */}
@@ -150,9 +150,9 @@ export default function HomePage() {
         >
           {result ? (
             /* Real scan result */
-            <div className="w-full max-w-[380px] rounded-2xl border border-sky-200 p-5 shadow-sm" style={{ background: '#fff' }}>
+            <div className="w-full max-w-[380px] rounded-2xl border border-blue-200 p-5 shadow-sm" style={{ background: '#fff' }}>
               <div className="mb-3 flex items-center justify-between">
-                <span className="text-[12px] font-bold text-sky-500">Scan Result</span>
+                <span className="text-[12px] font-bold text-blue-500">Scan Result</span>
                 <span
                   className="rounded-full px-2.5 py-0.5 text-[10px] font-black"
                   style={result.overallScore >= 70
@@ -165,13 +165,13 @@ export default function HomePage() {
                 </span>
               </div>
               <div className="mb-4">
-                <div className="mb-1 flex justify-between text-[10px] text-sky-400">
+                <div className="mb-1 flex justify-between text-[10px] text-blue-400">
                   <span>Compliance score</span>
                   <span className="font-bold" style={{ color: result.overallScore >= 70 ? '#059669' : result.overallScore >= 40 ? '#b45309' : '#dc2626' }}>
                     {result.overallScore} / 100
                   </span>
                 </div>
-                <div className="h-2 rounded-full" style={{ background: '#e0f2fe' }}>
+                <div className="h-2 rounded-full" style={{ background: '#e2e8f0' }}>
                   <div
                     className="h-2 rounded-full transition-all duration-500"
                     style={{
@@ -195,29 +195,29 @@ export default function HomePage() {
                       <span className="text-[9px] font-black uppercase" style={{ color: issue.severity === 'high' ? '#dc2626' : issue.severity === 'medium' ? '#b45309' : '#059669' }}>
                         {issue.severity}
                       </span>
-                      <span className="text-[9px] text-sky-400">· {issue.category}</span>
+                      <span className="text-[9px] text-blue-400">· {issue.category}</span>
                     </div>
-                    <p className="text-[11px] leading-snug text-sky-700">{issue.description}</p>
+                    <p className="text-[11px] leading-snug text-blue-700">{issue.description}</p>
                   </div>
                 ))}
               </div>
-              <div className="mt-3 rounded-lg border border-sky-100 p-3 text-[11px] leading-relaxed text-sky-600" style={{ background: '#f0f9ff' }}>
-                <span className="font-bold text-sky-800">Summary: </span>
+              <div className="mt-3 rounded-lg border border-blue-100 p-3 text-[11px] leading-relaxed text-blue-600" style={{ background: '#ffffff' }}>
+                <span className="font-bold text-blue-800">Summary: </span>
                 {result.summary}
               </div>
               <button
                 onClick={() => { setResult(null); setCheckedCount(0) }}
-                className="mt-3 w-full rounded-lg border border-sky-200 py-1.5 text-[11px] text-sky-500 hover:border-sky-400 hover:text-sky-700 transition-all duration-150 active:scale-[0.97]"
+                className="mt-3 w-full rounded-lg border border-blue-200 py-1.5 text-[11px] text-blue-500 hover:border-blue-400 hover:text-blue-700 transition-all duration-150 active:scale-[0.97]"
               >
                 New scan
               </button>
             </div>
           ) : (
             /* Animated compliance checklist demo */
-            <div className="w-full max-w-[380px] rounded-2xl border border-sky-200 p-5 shadow-sm" style={{ background: '#fff' }}>
+            <div className="w-full max-w-[380px] rounded-2xl border border-blue-200 p-5 shadow-sm" style={{ background: '#fff' }}>
               <div className="mb-4 flex items-center justify-between">
-                <span className="text-[12px] font-bold text-sky-500">Compliance Checklist</span>
-                <span className="rounded-full border border-sky-200 px-2.5 py-0.5 text-[10px] text-sky-400">
+                <span className="text-[12px] font-bold text-blue-500">Compliance Checklist</span>
+                <span className="rounded-full border border-blue-200 px-2.5 py-0.5 text-[10px] text-blue-400">
                   Live scan
                 </span>
               </div>
@@ -238,26 +238,26 @@ export default function HomePage() {
                           ? item.pass
                             ? { background: 'rgba(16,185,129,0.12)', color: '#059669', border: '1px solid rgba(16,185,129,0.3)' }
                             : { background: 'rgba(239,68,68,0.1)', color: '#dc2626', border: '1px solid rgba(239,68,68,0.25)' }
-                          : { background: '#f0f9ff', border: '1px solid rgba(2,132,199,0.15)', color: 'transparent' }}
+                          : { background: '#ffffff', border: '1px solid rgba(37,99,235,0.15)', color: 'transparent' }}
                       >
                         {visible ? (item.pass ? '✓' : '✗') : ''}
                       </span>
-                      <span className={`text-[12px] leading-snug transition-colors duration-300 ${visible ? 'text-sky-800' : 'text-sky-300'}`}>
+                      <span className={`text-[12px] leading-snug transition-colors duration-300 ${visible ? 'text-blue-800' : 'text-blue-300'}`}>
                         {item.label}
                       </span>
                     </motion.div>
                   )
                 })}
               </div>
-              <div className="mt-4 h-1 rounded-full" style={{ background: '#e0f2fe' }}>
+              <div className="mt-4 h-1 rounded-full" style={{ background: '#e2e8f0' }}>
                 <motion.div
                   className="h-1 rounded-full"
-                  style={{ background: '#0284c7' }}
+                  style={{ background: '#2563eb' }}
                   animate={{ width: `${(checkedCount / CHECKLIST_ITEMS.length) * 100}%` }}
                   transition={{ duration: 0.3, ease }}
                 />
               </div>
-              <p className="mt-2 text-[10px] text-sky-400 text-right">
+              <p className="mt-2 text-[10px] text-blue-400 text-right">
                 {checkedCount} / {CHECKLIST_ITEMS.length} checks
               </p>
             </div>
@@ -266,9 +266,9 @@ export default function HomePage() {
       </section>
 
       {/* FILTER PILLS */}
-      <div className="border-y border-sky-200/60" style={{ background: 'rgba(224,242,254,0.4)' }}>
+      <div className="border-y border-blue-200/60" style={{ background: 'rgba(224,242,254,0.4)' }}>
         <div className="mx-auto flex max-w-6xl items-center gap-2 overflow-x-auto px-5 py-3 scrollbar-none">
-          <span className="shrink-0 text-[11px] font-semibold text-sky-400">Filter by type:</span>
+          <span className="shrink-0 text-[11px] font-semibold text-blue-400">Filter by type:</span>
           {PILLS.map(p => (
             <button
               key={p}
@@ -276,8 +276,8 @@ export default function HomePage() {
               className="shrink-0 rounded-full px-3.5 py-1 text-[12px] font-semibold transition-all duration-150 active:scale-[0.97]"
               style={
                 activeType === p
-                  ? { background: '#0284c7', color: '#fff' }
-                  : { border: '1px solid rgba(2,132,199,0.2)', background: 'transparent', color: '#0369a1' }
+                  ? { background: '#2563eb', color: '#fff' }
+                  : { border: '1px solid rgba(37,99,235,0.2)', background: 'transparent', color: '#1d4ed8' }
               }
             >
               {p}
@@ -288,7 +288,7 @@ export default function HomePage() {
 
       {/* HOW IT WORKS */}
       <section className="mx-auto max-w-6xl px-5 py-10">
-        <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#0284c7' }}>How it works</p>
+        <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#2563eb' }}>How it works</p>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {STEPS.map((s) => (
             <motion.div
@@ -297,15 +297,15 @@ export default function HomePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, ease }}
-              className="flex items-start gap-4 rounded-xl border border-sky-200 p-5 shadow-sm"
+              className="flex items-start gap-4 rounded-xl border border-blue-200 p-5 shadow-sm"
               style={{ background: '#fff' }}
             >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-black text-white" style={{ background: '#0284c7' }}>
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-black text-white" style={{ background: '#2563eb' }}>
                 {s.n}
               </div>
               <div>
-                <h3 className="text-[13px] font-bold text-sky-900">{s.title}</h3>
-                <p className="mt-0.5 text-[12px] text-sky-600">{s.desc}</p>
+                <h3 className="text-[13px] font-bold text-blue-900">{s.title}</h3>
+                <p className="mt-0.5 text-[12px] text-blue-600">{s.desc}</p>
               </div>
             </motion.div>
           ))}
@@ -314,30 +314,30 @@ export default function HomePage() {
 
       {/* PRICING */}
       <section className="mx-auto max-w-3xl px-5 pb-12">
-        <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#0284c7' }}>Pricing</p>
+        <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#2563eb' }}>Pricing</p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {/* Free */}
-          <div className="rounded-2xl border border-sky-200 p-6 shadow-sm" style={{ background: '#fff' }}>
-            <div className="mb-1 text-[13px] font-black text-sky-900">Free</div>
-            <div className="mb-4 text-[32px] font-black tracking-tight text-sky-900">
-              $0 <span className="text-[14px] font-normal text-sky-400">/ month</span>
+          <div className="rounded-2xl border border-blue-200 p-6 shadow-sm" style={{ background: '#fff' }}>
+            <div className="mb-1 text-[13px] font-black text-blue-900">Free</div>
+            <div className="mb-4 text-[32px] font-black tracking-tight text-blue-900">
+              $0 <span className="text-[14px] font-normal text-blue-400">/ month</span>
             </div>
             <div className="space-y-2">
               {FREE_FEATURES.map(f => (
-                <div key={f} className="flex items-center gap-2 text-[12px] text-sky-700">
-                  <span style={{ color: '#0284c7' }}>✓</span> {f}
+                <div key={f} className="flex items-center gap-2 text-[12px] text-blue-700">
+                  <span style={{ color: '#2563eb' }}>✓</span> {f}
                 </div>
               ))}
             </div>
             <a
               href="#scan"
-              className="mt-5 block rounded-xl border border-sky-200 py-2.5 text-center text-[13px] font-bold text-sky-600 transition-all duration-150 hover:border-sky-400 hover:text-sky-800 active:scale-[0.97]"
+              className="mt-5 block rounded-xl border border-blue-200 py-2.5 text-center text-[13px] font-bold text-blue-600 transition-all duration-150 hover:border-blue-400 hover:text-blue-800 active:scale-[0.97]"
             >
               Start free →
             </a>
           </div>
           {/* Pro */}
-          <div className="relative rounded-2xl p-6 text-white" style={{ background: 'linear-gradient(135deg, #0284c7, #0369a1)' }}>
+          <div className="relative rounded-2xl p-6 text-white" style={{ background: 'linear-gradient(135deg, #2563eb, #1d4ed8)' }}>
             <div className="absolute -top-3 right-5 rounded-full bg-emerald-400 px-3 py-0.5 text-[10px] font-black text-black">
               Popular
             </div>
@@ -355,7 +355,7 @@ export default function HomePage() {
             <Link
               href="/login"
               className="mt-5 block rounded-xl bg-white/90 py-2.5 text-center text-[13px] font-black transition-all duration-150 hover:bg-white active:scale-[0.97]"
-              style={{ color: '#0369a1' }}
+              style={{ color: '#1d4ed8' }}
             >
               Start Pro →
             </Link>
@@ -364,11 +364,11 @@ export default function HomePage() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-sky-200 px-5 py-5 text-center text-[11px] text-sky-400">
-        <span className="mr-3 font-black text-sky-700">Comply<span style={{ color: '#0284c7' }}>Buddy</span></span>
+      <footer className="border-t border-blue-200 px-5 py-5 text-center text-[11px] text-blue-400">
+        <span className="mr-3 font-black text-blue-700">Comply<span style={{ color: '#2563eb' }}>Buddy</span></span>
         © {new Date().getFullYear()} ·{' '}
-        <Link href="/privacy" className="hover:text-sky-700 transition-colors">Privacy</Link> ·{' '}
-        <Link href="/terms" className="hover:text-sky-700 transition-colors">Terms</Link>
+        <Link href="/privacy" className="hover:text-blue-700 transition-colors">Privacy</Link> ·{' '}
+        <Link href="/terms" className="hover:text-blue-700 transition-colors">Terms</Link>
       </footer>
     </div>
   )

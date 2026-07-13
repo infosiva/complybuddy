@@ -19,7 +19,7 @@ const brand: BrandConfig = {
   name: 'ComplyBuddy',
   tagline: 'AI compliance checker — GDPR, FTC, copyright issues caught before they cost you.',
   icon: '⚖️',
-  color: '#0284c7',
+  color: '#2563eb',
   url: 'https://complyscan.app',
   navLinks: [{ label: 'Scan content', href: '/' }],
   cta: { label: 'Scan free →', href: '/' },
@@ -39,9 +39,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const theme = await loadSiteTheme('complybuddy')
 
   const themeCSS = buildThemeStyleTag(theme, {
-    background: '#f0f9ff',
-    primary: '#0284c7',
-    secondary: '#0369a1',
+    background: '#ffffff',
+    primary: '#2563eb',
+    secondary: '#1d4ed8',
   })
 
   return (
@@ -53,20 +53,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
         <style dangerouslySetInnerHTML={{ __html: `
           :root {
-            --theme-primary: #0284c7;
-            --theme-secondary: #0369a1;
-            --theme-base: #f0f9ff;
-            --background: #f0f9ff;
-            --surface-1: #e0f2fe;
-            --surface-2: #bae6fd;
-            --foreground: #0c4a6e;
-            --text-2: #0284c7;
-            --border-default: rgba(2,132,199,0.15);
-            --border-strong: rgba(2,132,199,0.3);
+            --theme-primary: #2563eb;
+            --theme-secondary: #1d4ed8;
+            --theme-base: #ffffff;
+            --background: #ffffff;
+            --surface-1: #f8fafc;
+            --surface-2: #e2e8f0;
+            --foreground: #1e3a8a;
+            --text-2: #2563eb;
+            --border-default: rgba(37,99,235,0.15);
+            --border-strong: rgba(37,99,235,0.3);
             --radius: 0.375rem;
             --radius-lg: 0.5rem;
           }
-          html, body { background: #f0f9ff !important; color: #0c4a6e !important; }
+          html, body { background: #ffffff !important; color: #1e3a8a !important; }
           body { font-family: 'IBM Plex Sans', system-ui, sans-serif !important; }
           h1, h2, h3 { font-weight: 600 !important; letter-spacing: -0.01em; }
           ${themeCSS}
@@ -81,10 +81,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Footer siteName="ComplyBuddy" />
         <Script defer data-site="complyscan.app" src="http://31.97.56.148:3098/t.js" strategy="afterInteractive" />
         {!isWidgetHidden(theme, 'chatbot') && <ChatBot />}
-        {!isWidgetHidden(theme, 'backToTop') && <BackToTop accentColor="#0284c7" />}
+        {!isWidgetHidden(theme, 'backToTop') && <BackToTop accentColor="#2563eb" />}
         {!isWidgetHidden(theme, 'cookieConsent') && <CookieConsent />}
         <FloatingChatWrapper />
-        <FeedbackWidget siteName="ComplyBuddy" accentColor="#0284c7" accentColor2="#0369a1" position="left" />
+        <FeedbackWidget siteName="ComplyBuddy" accentColor="#2563eb" accentColor2="#1d4ed8" position="left" />
       </body>
     </html>
   )
