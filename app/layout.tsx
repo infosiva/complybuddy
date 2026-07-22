@@ -79,7 +79,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <main className="flex-1 pt-16">{children}</main>
         <AffiliateStrip />
         <Footer siteName="ComplyBuddy" />
-        <Script defer data-site="complyscan.app" src="http://31.97.56.148:3098/t.js" strategy="afterInteractive" />
         {!isWidgetHidden(theme, 'chatbot') && <ChatBot />}
         {!isWidgetHidden(theme, 'backToTop') && <BackToTop accentColor="#2563eb" />}
         {!isWidgetHidden(theme, 'cookieConsent') && <CookieConsent />}
