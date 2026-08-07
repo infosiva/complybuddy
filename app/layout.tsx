@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import './globals.css'
 import SharedNavbar from '@/components/SharedNavbar'
 import Footer from '../components/Footer'
@@ -14,6 +13,7 @@ import BackToTop from '@/components/BackToTop'
 import FloatingChatWrapper from '@/components/FloatingChatWrapper'
 import FeedbackWidget from '@/components/FeedbackWidget'
 import { loadSiteTheme, buildThemeStyleTag, isWidgetHidden } from '@/lib/theme-loader'
+import AdsScript from '@/components/AdsScript'
 
 const brand: BrandConfig = {
   name: 'ComplyBuddy',
@@ -74,7 +74,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         ` }} />
       </head>
       <body className="flex flex-col min-h-screen">
-        <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4237294630161176" crossOrigin="anonymous" strategy="lazyOnload" />
+        <AdsScript />
         <DesignEffects />
         <SharedNavbar brand={brand} authSlot={<AuthButton />} />
         <main className="flex-1 pt-16">{children}</main>
