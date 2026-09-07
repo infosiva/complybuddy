@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Script from 'next/script'
 import './globals.css'
 import SharedNavbar from '@/components/SharedNavbar'
 import Footer from '../components/Footer'
@@ -75,6 +76,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className="flex flex-col min-h-screen">
         <AdsScript />
+        <Script defer data-site="complyscan.app" src="http://31.97.56.148:3098/t.js" strategy="afterInteractive" />
         <DesignEffects />
         <SharedNavbar brand={brand} authSlot={<AuthButton />} />
         <main className="flex-1 pt-16">{children}</main>
