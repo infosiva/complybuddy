@@ -312,6 +312,41 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* FAQ */}
+      <section className="mx-auto max-w-3xl px-5 pb-12">
+        <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#2563eb' }}>FAQ</p>
+        <h2 className="mb-6 text-[22px] font-black tracking-tight text-blue-900">Common questions</h2>
+        <div className="space-y-5">
+          {[
+            {
+              q: 'What does ComplyBuddy actually check?',
+              a: 'Paste in a privacy policy, terms page, or marketing copy and ComplyBuddy scans it against GDPR, FTC, and copyright-risk patterns — missing disclosures, unclear data-retention language, unsubstantiated claims — and returns a risk score with the specific lines flagged, plus a plain-English explanation of why each one matters.',
+            },
+            {
+              q: 'Is this a substitute for a lawyer?',
+              a: 'No. ComplyBuddy is a first-pass screening tool that catches the common, obvious gaps before you pay for legal review — it is not legal advice and does not replace an attorney for anything that actually goes to contract or litigation.',
+            },
+            {
+              q: 'What happens to the content I paste in?',
+              a: 'Scans run on the text you submit for that session. We do not sell or share submitted content, and nothing is used to train external models.',
+            },
+            {
+              q: 'How is Pro different from the free plan?',
+              a: 'Free gives you 10 scans a month across GDPR, FTC, and copyright checks. Pro removes the monthly cap, unlocks every compliance type, and adds PDF export so you can hand a report straight to a reviewer or client.',
+            },
+            {
+              q: 'Which regulations are covered right now?',
+              a: 'GDPR (EU data-protection disclosures), FTC guidelines (US advertising and endorsement rules), and basic copyright-risk patterns in marketing copy. We are expanding coverage based on what users ask to scan against.',
+            },
+          ].map((item) => (
+            <div key={item.q}>
+              <h3 className="mb-1 text-[15px] font-bold text-blue-900">{item.q}</h3>
+              <p className="text-[13px] leading-relaxed text-slate-600">{item.a}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* PRICING */}
       <section className="mx-auto max-w-3xl px-5 pb-12">
         <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#2563eb' }}>Pricing</p>
@@ -367,6 +402,7 @@ export default function HomePage() {
       <footer className="border-t border-blue-200 px-5 py-5 text-center text-[11px] text-blue-400">
         <span className="mr-3 font-black text-blue-700">Comply<span style={{ color: '#2563eb' }}>Buddy</span></span>
         © {new Date().getFullYear()} ·{' '}
+        <Link href="/about" className="hover:text-blue-700 transition-colors">About</Link> ·{' '}
         <Link href="/privacy" className="hover:text-blue-700 transition-colors">Privacy</Link> ·{' '}
         <Link href="/terms" className="hover:text-blue-700 transition-colors">Terms</Link>
       </footer>
