@@ -6,7 +6,7 @@ export default function MarqueeBar() {
   const items = [...siteConfig.socialProof.marqueeItems, ...siteConfig.socialProof.marqueeItems]
 
   return (
-    <section aria-label="Compliance frameworks covered" className="py-6 border-y border-white/[0.06] overflow-hidden">
+    <section aria-label="Compliance frameworks covered" className="py-6 border-y border-white/[0.06] overflow-hidden" style={{ background: '#0b0f1a' }}>
       <div className="marquee-wrapper">
         <div className="marquee-track gap-8">
           {items.map((item, i) => (

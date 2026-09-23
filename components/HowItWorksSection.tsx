@@ -9,7 +9,7 @@ export default function HowItWorksSection() {
   const itemVars      = useMotionVariants(FADE_UP)
 
   return (
-    <section id="how-it-works" className="py-14 px-4 sm:px-6 max-w-5xl mx-auto border-t border-white/[0.05]">
+    <section id="how-it-works" className="py-14 px-4 sm:px-6 max-w-5xl mx-auto border-t border-white/[0.05]" style={{ background: '#0b0f1a' }}>
       <motion.div
         variants={containerVars as Parameters<typeof motion.div>[0]['variants']}
         initial="hidden"

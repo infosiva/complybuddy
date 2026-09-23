@@ -75,7 +75,7 @@ Rules:
 async function callGroq(content: string, contentType: string): Promise<string> {
   const key = process.env.GROQ_API_KEY;
   if (!key) throw new Error("Groq not configured");
-  const models = ["llama-3.3-70b-versatile", "llama-3.1-8b-instant"];
+  const models = ["qwen/qwen3.8-27b", "openai/gpt-oss-20b"];
   for (const model of models) {
     try {
       const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {

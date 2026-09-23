@@ -35,23 +35,34 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'AI not configured' }, { status: 503 })
     }
 
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${groqKey}`,
-      },
-      body: JSON.stringify({
-        model: 'llama-3.1-8b-instant',
-        messages: chatMessages,
-        max_tokens: 300,
-        temperature: 0.5,
-        stream: true,
-      }),
-    })
+    let res: Response | null = null
+    for (const model of ['qwen/qwen3.8-27b', 'openai/gpt-oss-20b']) {
+      try {
+        const attempt = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${groqKey}`,
+          },
+          body: JSON.stringify({
+            model,
+            messages: chatMessages,
+            max_tokens: 400,
+            temperature: 0.5,
+            stream: true,
+          }),
+        })
+        if (attempt.ok && attempt.body) {
+          res = attempt
+          break
+        }
+      } catch (err) {
+        console.warn(`[/api/chat] groq/${model} failed`, err)
+      }
+    }
 
-    if (!res.ok || !res.body) {
-      return NextResponse.json({ error: 'Groq request failed' }, { status: 502 })
+    if (!res || !res.body) {
+      return NextResponse.json({ text: 'Chat is resting — try again in a moment.' })
     }
 
     // Pass the SSE stream through, converting to plain text chunks
@@ -99,6 +110,6 @@ export async function POST(req: NextRequest) {
     })
   } catch (err) {
     console.error('[/api/chat]', err)
-    return NextResponse.json({ error: 'Chat failed' }, { status: 500 })
+    return NextResponse.json({ text: 'Chat is resting — try again in a moment.' })
   }
 }
