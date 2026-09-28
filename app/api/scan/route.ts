@@ -105,7 +105,7 @@ async function callGroq(content: string, contentType: string): Promise<string> {
 async function callGemini(content: string, contentType: string): Promise<string> {
   const key = process.env.GEMINI_API_KEY;
   if (!key) throw new Error("Gemini not configured");
-  const models = ["gemini-2.5-flash", "gemini-2.0-flash"];
+  const models = ["gemini-2.5-flash", "gemini-2.5-flash-lite"];
   for (const model of models) {
     try {
       const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/openai/chat/completions`, {
