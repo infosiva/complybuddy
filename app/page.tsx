@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import { MagneticButton } from "@infosiva/shared-ui/modern";
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
 
@@ -127,14 +128,14 @@ export default function HomePage() {
             />
             <div className="mt-3 flex items-center justify-between">
               <span className="text-[11px] text-blue-400">{text.length} chars</span>
-              <button
+              <MagneticButton
                 onClick={handleScan}
                 disabled={scanning || text.trim().length < 10}
                 className="rounded-lg px-5 py-2 text-[13px] font-bold text-white transition-all duration-150 hover:opacity-90 active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed"
                 style={{ background: '#2563eb' }}
               >
                 {scanning ? 'Scanning…' : 'Scan now →'}
-              </button>
+              </MagneticButton>
             </div>
             {error && <p className="mt-2 text-[11px] text-red-500">{error}</p>}
           </div>

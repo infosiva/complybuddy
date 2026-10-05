@@ -16,6 +16,7 @@ import FeedbackWidget from '@/components/FeedbackWidget'
 import { loadSiteTheme, buildThemeStyleTag, isWidgetHidden } from '@/lib/theme-loader'
 import AdsScript from '@/components/AdsScript'
 
+import { MotionProvider } from "@infosiva/shared-ui/modern";
 const brand: BrandConfig = {
   name: 'ComplyBuddy',
   tagline: 'AI compliance checker — GDPR, FTC, copyright issues caught before they cost you.',
@@ -85,7 +86,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <Script defer data-site="complyscan.app" src="http://31.97.56.148:3098/t.js" strategy="afterInteractive" />
         <DesignEffects />
         <SharedNavbar brand={brand} authSlot={<AuthButton />} />
-        <main className="flex-1 pt-16">{children}</main>
+        <main className="flex-1 pt-16"><MotionProvider>{children}</MotionProvider></main>
         <AffiliateStrip />
         <Footer siteName="ComplyBuddy" />
         {!isWidgetHidden(theme, 'chatbot') && <ChatBot />}
