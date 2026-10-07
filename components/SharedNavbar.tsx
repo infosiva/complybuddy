@@ -41,14 +41,10 @@ export default function SharedNavbar({ brand, authSlot }: { brand: BrandConfig; 
         <div className="max-w-5xl mx-auto px-5 sm:px-8 h-14 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group select-none">
-            <span
-              className="text-lg leading-none transition-transform duration-200 group-hover:scale-110"
-              aria-hidden
-            >
-              {brand.icon}
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.svg" alt="" width={24} height={24} className="transition-transform duration-200 group-hover:scale-110" />
             <span className="font-semibold text-blue-900 text-sm tracking-tight">
-              {brand.name}
+              Comply<span style={{ color: brand.color }}>Buddy</span>
             </span>
           </Link>
 

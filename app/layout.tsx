@@ -13,7 +13,7 @@ import SchemaOrg from '@/components/SchemaOrg'
 import BackToTop from '@/components/BackToTop'
 import FloatingChatWrapper from '@/components/FloatingChatWrapper'
 import FeedbackWidget from '@/components/FeedbackWidget'
-import { loadSiteTheme, buildThemeStyleTag, isWidgetHidden } from '@/lib/theme-loader'
+import { loadSiteTheme, buildThemeStyleTag, isWidgetHidden, buildGa4Snippet } from '@/lib/theme-loader'
 import AdsScript from '@/components/AdsScript'
 
 import { MotionProvider } from "@infosiva/shared-ui/modern";
@@ -21,7 +21,7 @@ const brand: BrandConfig = {
   name: 'ComplyBuddy',
   tagline: 'AI compliance checker — GDPR, FTC, copyright issues caught before they cost you.',
   icon: '⚖️',
-  color: '#2563eb',
+  color: '#4338ca',
   url: 'https://complyscan.app',
   navLinks: [{ label: 'Scan content', href: '/' }],
   cta: { label: 'Scan free →', href: '/' },
@@ -40,10 +40,11 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const theme = await loadSiteTheme('complybuddy')
 
+  const ga4 = buildGa4Snippet(theme)
   const themeCSS = buildThemeStyleTag(theme, {
     background: '#ffffff',
-    primary: '#2563eb',
-    secondary: '#1d4ed8',
+    primary: '#4338ca',
+    secondary: '#3730a3',
   })
 
   return (
@@ -62,16 +63,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
         <style dangerouslySetInnerHTML={{ __html: `
           :root {
-            --theme-primary: #2563eb;
-            --theme-secondary: #1d4ed8;
+            --theme-primary: #4338ca;
+            --theme-secondary: #3730a3;
             --theme-base: #ffffff;
             --background: #ffffff;
             --surface-1: #f8fafc;
             --surface-2: #e2e8f0;
             --foreground: #1e3a8a;
-            --text-2: #2563eb;
-            --border-default: rgba(37,99,235,0.15);
-            --border-strong: rgba(37,99,235,0.3);
+            --text-2: #4338ca;
+            --border-default: rgba(67,56,202,0.15);
+            --border-strong: rgba(67,56,202,0.3);
             --radius: 0.375rem;
             --radius-lg: 0.5rem;
           }
@@ -83,17 +84,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body className="flex flex-col min-h-screen">
         <AdsScript />
-        <Script defer data-site="complyscan.app" src="http://31.97.56.148:3098/t.js" strategy="afterInteractive" />
+        {ga4 && <Script id="ga4" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: ga4 }} />}
         <DesignEffects />
         <SharedNavbar brand={brand} authSlot={<AuthButton />} />
         <main className="flex-1 pt-16"><MotionProvider>{children}</MotionProvider></main>
         <AffiliateStrip />
         <Footer siteName="ComplyBuddy" />
         {!isWidgetHidden(theme, 'chatbot') && <ChatBot />}
-        {!isWidgetHidden(theme, 'backToTop') && <BackToTop accentColor="#2563eb" />}
+        {!isWidgetHidden(theme, 'backToTop') && <BackToTop accentColor="#4338ca" />}
         {!isWidgetHidden(theme, 'cookieConsent') && <CookieConsent />}
         <FloatingChatWrapper />
-        <FeedbackWidget siteName="ComplyBuddy" accentColor="#2563eb" accentColor2="#1d4ed8" position="left" />
+        <FeedbackWidget siteName="ComplyBuddy" accentColor="#4338ca" accentColor2="#3730a3" position="left" />
       </body>
     </html>
   )

@@ -31,12 +31,8 @@ export async function POST(req: NextRequest) {
     ]
 
     const groqKey = process.env.GROQ_API_KEY
-    if (!groqKey) {
-      return NextResponse.json({ error: 'AI not configured' }, { status: 503 })
-    }
-
     let res: Response | null = null
-    for (const model of ['qwen/qwen3.8-27b', 'openai/gpt-oss-20b']) {
+    for (const model of groqKey ? ['qwen/qwen3.8-27b', 'openai/gpt-oss-20b'] : []) {
       try {
         const attempt = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
@@ -70,6 +66,16 @@ export async function POST(req: NextRequest) {
           body: JSON.stringify({ systemInstruction: { parts: [{ text: systemPrompt }] }, contents: messages.filter(m => m.role !== 'system').map(m => ({ role: m.role === 'assistant' ? 'model' : 'user', parts: [{ text: m.content }] })), generationConfig: { maxOutputTokens: 600, temperature: 0.6 } }),
         })
         if (gr.ok) { const gt = (await gr.json()).candidates?.[0]?.content?.parts?.[0]?.text; if (gt) return new NextResponse(gt, { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache' } }) }
+      } catch { /* fall through */ }
+    }
+    const ck = process.env.CEREBRAS_API_KEY
+    if (ck) {
+      try {
+        const cr = await fetch('https://api.cerebras.ai/v1/chat/completions', {
+          method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${ck}` },
+          body: JSON.stringify({ model: 'llama3.1-8b', messages: chatMessages, max_tokens: 400 }),
+        })
+        if (cr.ok) { const ct = (await cr.json()).choices?.[0]?.message?.content; if (ct) return new NextResponse(ct, { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache' } }) }
       } catch { /* fall through */ }
     }
       return NextResponse.json({ text: 'Chat is resting — try again in a moment.' })

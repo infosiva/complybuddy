@@ -143,7 +143,7 @@ export default function ChatBot() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{
                 width: 34, height: 34, borderRadius: 8,
-                background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                background: 'linear-gradient(135deg, #3b82f6, #3730a3)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 16,
               }}>🛡️</div>

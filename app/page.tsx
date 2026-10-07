@@ -105,13 +105,13 @@ export default function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease }}
         >
-          <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-blue-300/60 px-3 py-1" style={{ background: 'rgba(37,99,235,0.08)' }}>
-            <span className="h-1.5 w-1.5 rounded-full" style={{ background: '#2563eb' }} />
-            <span className="text-[11px] font-semibold" style={{ color: '#2563eb' }}>AI-powered compliance scanner</span>
+          <div className="mb-4 inline-flex w-fit items-center gap-2 rounded-full border border-blue-300/60 px-3 py-1" style={{ background: 'rgba(67,56,202,0.08)' }}>
+            <span className="h-1.5 w-1.5 rounded-full" style={{ background: '#4338ca' }} />
+            <span className="text-[11px] font-semibold" style={{ color: '#4338ca' }}>AI-powered compliance scanner</span>
           </div>
           <h1 className="mb-3 font-black leading-[1.05] tracking-tight text-blue-900" style={{ fontSize: 'clamp(28px,4.5vw,48px)' }}>
             Paste any content.<br />
-            <span style={{ color: '#2563eb' }}>Know your compliance risk</span><br />
+            <span style={{ color: '#4338ca' }}>Know your compliance risk</span><br />
             in 60 seconds.
           </h1>
           <p className="mb-6 text-[14px] leading-relaxed text-blue-700/70">
@@ -132,7 +132,7 @@ export default function HomePage() {
                 onClick={handleScan}
                 disabled={scanning || text.trim().length < 10}
                 className="rounded-lg px-5 py-2 text-[13px] font-bold text-white transition-all duration-150 hover:opacity-90 active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed"
-                style={{ background: '#2563eb' }}
+                style={{ background: '#4338ca' }}
               >
                 {scanning ? 'Scanning…' : 'Scan now →'}
               </MagneticButton>
@@ -239,7 +239,7 @@ export default function HomePage() {
                           ? item.pass
                             ? { background: 'rgba(16,185,129,0.12)', color: '#059669', border: '1px solid rgba(16,185,129,0.3)' }
                             : { background: 'rgba(239,68,68,0.1)', color: '#dc2626', border: '1px solid rgba(239,68,68,0.25)' }
-                          : { background: '#ffffff', border: '1px solid rgba(37,99,235,0.15)', color: 'transparent' }}
+                          : { background: '#ffffff', border: '1px solid rgba(67,56,202,0.15)', color: 'transparent' }}
                       >
                         {visible ? (item.pass ? '✓' : '✗') : ''}
                       </span>
@@ -253,7 +253,7 @@ export default function HomePage() {
               <div className="mt-4 h-1 rounded-full" style={{ background: '#e2e8f0' }}>
                 <motion.div
                   className="h-1 rounded-full"
-                  style={{ background: '#2563eb' }}
+                  style={{ background: '#4338ca' }}
                   animate={{ width: `${(checkedCount / CHECKLIST_ITEMS.length) * 100}%` }}
                   transition={{ duration: 0.3, ease }}
                 />
@@ -277,8 +277,8 @@ export default function HomePage() {
               className="shrink-0 rounded-full px-3.5 py-1 text-[12px] font-semibold transition-all duration-150 active:scale-[0.97]"
               style={
                 activeType === p
-                  ? { background: '#2563eb', color: '#fff' }
-                  : { border: '1px solid rgba(37,99,235,0.2)', background: 'transparent', color: '#1d4ed8' }
+                  ? { background: '#4338ca', color: '#fff' }
+                  : { border: '1px solid rgba(67,56,202,0.2)', background: 'transparent', color: '#3730a3' }
               }
             >
               {p}
@@ -289,7 +289,7 @@ export default function HomePage() {
 
       {/* HOW IT WORKS */}
       <section className="mx-auto max-w-6xl px-5 py-10">
-        <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#2563eb' }}>How it works</p>
+        <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#4338ca' }}>How it works</p>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {STEPS.map((s) => (
             <motion.div
@@ -301,7 +301,7 @@ export default function HomePage() {
               className="flex items-start gap-4 rounded-xl border border-blue-200 p-5 shadow-sm"
               style={{ background: '#fff' }}
             >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-black text-white" style={{ background: '#2563eb' }}>
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[13px] font-black text-white" style={{ background: '#4338ca' }}>
                 {s.n}
               </div>
               <div>
@@ -315,7 +315,7 @@ export default function HomePage() {
 
       {/* FAQ */}
       <section className="mx-auto max-w-3xl px-5 pb-12">
-        <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#2563eb' }}>FAQ</p>
+        <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#4338ca' }}>FAQ</p>
         <h2 className="mb-6 text-[22px] font-black tracking-tight text-blue-900">Common questions</h2>
         <div className="space-y-5">
           {[
@@ -350,7 +350,7 @@ export default function HomePage() {
 
       {/* PRICING */}
       <section className="mx-auto max-w-3xl px-5 pb-12">
-        <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#2563eb' }}>Pricing</p>
+        <p className="mb-4 text-[11px] font-black uppercase tracking-widest" style={{ color: '#4338ca' }}>Pricing</p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {/* Free */}
           <div className="rounded-2xl border border-blue-200 p-6 shadow-sm" style={{ background: '#fff' }}>
@@ -361,7 +361,7 @@ export default function HomePage() {
             <div className="space-y-2">
               {FREE_FEATURES.map(f => (
                 <div key={f} className="flex items-center gap-2 text-[12px] text-blue-700">
-                  <span style={{ color: '#2563eb' }}>✓</span> {f}
+                  <span style={{ color: '#4338ca' }}>✓</span> {f}
                 </div>
               ))}
             </div>
@@ -373,7 +373,7 @@ export default function HomePage() {
             </a>
           </div>
           {/* Pro */}
-          <div className="relative rounded-2xl p-6 text-white" style={{ background: 'linear-gradient(135deg, #2563eb, #1d4ed8)' }}>
+          <div className="relative rounded-2xl p-6 text-white" style={{ background: 'linear-gradient(135deg, #4338ca, #3730a3)' }}>
             <div className="absolute -top-3 right-5 rounded-full bg-emerald-400 px-3 py-0.5 text-[10px] font-black text-black">
               Popular
             </div>
@@ -391,7 +391,7 @@ export default function HomePage() {
             <Link
               href="/login"
               className="mt-5 block rounded-xl bg-white/90 py-2.5 text-center text-[13px] font-black transition-all duration-150 hover:bg-white active:scale-[0.97]"
-              style={{ color: '#1d4ed8' }}
+              style={{ color: '#3730a3' }}
             >
               Start Pro →
             </Link>
@@ -401,7 +401,7 @@ export default function HomePage() {
 
       {/* FOOTER */}
       <footer className="border-t border-blue-200 px-5 py-5 text-center text-[11px] text-blue-400">
-        <span className="mr-3 font-black text-blue-700">Comply<span style={{ color: '#2563eb' }}>Buddy</span></span>
+        <span className="mr-3 font-black text-blue-700">Comply<span style={{ color: '#4338ca' }}>Buddy</span></span>
         © {new Date().getFullYear()} ·{' '}
         <Link href="/about" className="hover:text-blue-700 transition-colors">About</Link> ·{' '}
         <Link href="/privacy" className="hover:text-blue-700 transition-colors">Privacy</Link> ·{' '}
