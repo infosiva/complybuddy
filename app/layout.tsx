@@ -14,6 +14,7 @@ import BackToTop from '@/components/BackToTop'
 import FloatingChatWrapper from '@/components/FloatingChatWrapper'
 import FeedbackWidget from '@/components/FeedbackWidget'
 import { loadSiteTheme, buildThemeStyleTag, isWidgetHidden, buildGa4Snippet } from '@/lib/theme-loader'
+import { AnimatedBg } from '@/components/AnimatedBg'
 import AdsScript from '@/components/AdsScript'
 
 import { MotionProvider } from "@infosiva/shared-ui/modern";
@@ -83,6 +84,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         ` }} />
       </head>
       <body className="flex flex-col min-h-screen">
+        <AnimatedBg theme={theme} fallback="none" />
         <AdsScript />
         {ga4 && <Script id="ga4" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: ga4 }} />}
         <DesignEffects />

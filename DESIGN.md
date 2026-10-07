@@ -149,3 +149,6 @@ No dark background — use white/slate-50 for authority feel. Blue = #1d4ed8 pri
 ---
 
 *Generated: 2026-05-07 by design-pipeline.ts*
+
+## AI platform (ai-core) status
+Not on ai-core yet (honest gap): chat uses the local free chain. Document upload + grounded compliance answers is the natural ai-core RAG fit and is TODO; not built, do not claim it.
